@@ -19,7 +19,7 @@ public class Main {
 
         System.out.print(sdf.format(gc.getTime()));
         String s = sdf.format(gc.getTime());*/
-
+int d = 0;
        TaskManager.addTaskToFile(ex);
         Task t = TaskManager.getTaskFromFile();
 
