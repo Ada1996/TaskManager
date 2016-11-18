@@ -39,6 +39,7 @@ public class MainForm extends JFrame {
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 form1.setSize(300, 200);
+                //
 
             }
         });
