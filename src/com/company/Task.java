@@ -1,23 +1,22 @@
 package com.company;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Task implements Serializable {
 
-    private String nameOfTask;
+    private String name;
     private String descriptionOfTask;
     private GregorianCalendar dateOfMessage;
     private String contacts;
 
 
     public String getName() {
-        return nameOfTask;
+        return name;
     }
 
     public void setName(String nameOfTask) {
-        this.nameOfTask = nameOfTask;
+        this.name = nameOfTask;
     }
 
     public String getDescriptionOfTask() {
@@ -46,14 +45,14 @@ public class Task implements Serializable {
 
 
     public Task(String name, GregorianCalendar time, String contacts) {
-        this.nameOfTask = name;
+        this.name = name;
         this.contacts = contacts;
         this.descriptionOfTask = "";
         this.dateOfMessage = time;
     }
 
     public Task(String name, String description, GregorianCalendar time, String contacts) {
-        this.nameOfTask = name;
+        this.name = name;
         this.contacts = contacts;
         this.descriptionOfTask = description;
         this.dateOfMessage = time;

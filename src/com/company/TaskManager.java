@@ -1,39 +1,50 @@
 package com.company;
 
-import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-/*String del = "newPart";
-
-        os.write(Task.getName().getBytes());
-        os.write(del.getBytes());
-
-        os.write(Task.getDescriptionOfTask().getBytes());
-        os.write(del.getBytes());
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        os.write(sdf.format(Task.getDateOfMessage().getTime()).getBytes());
-        os.write(del.getBytes());
-
-        os.write(Task.getContacts().getBytes());*/
-
-/**
- * Created by daryo on 10.11.2016.
- */
 public class TaskManager {
 
-    public static void addTaskToFile(Task Task) throws IOException {
-        FileOutputStream fos = new FileOutputStream("temp.out");
+    private List<Task> tasks = null;
+
+    public TaskManager(){
+        this.tasks = new ArrayList<>();
+    }
+
+    public int getCountTasks(){
+        return this.tasks.size();
+    }
+
+    public void add(Task task) {
+        if(task == null)
+            throw new NullPointerException();
+        else
+            this.tasks.add(task);
+    }
+
+    public void delete(Task task){
+        if(task != null){
+            this.tasks.remove(task);
+        }
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public static void addTaskToFile(Task Task, String name) throws IOException {
+        FileOutputStream fos = new FileOutputStream(name);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(Task);
     }
 
-    public static Task getTaskFromFile() throws IOException, ClassNotFoundException{
-        FileInputStream fis = new FileInputStream("temp.out");
+    public static Task getTaskFromFile(String name) throws IOException, ClassNotFoundException{
+        FileInputStream fis = new FileInputStream(name);
         ObjectInputStream oin = new ObjectInputStream(fis);
         Task ts = (Task) oin.readObject();
         return ts;
