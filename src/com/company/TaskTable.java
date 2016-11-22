@@ -8,20 +8,21 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Настя
  */
 public class TaskTable extends AbstractTableModel{
-    private int column=4;
-    private ArrayList<String []> data;
-   
+    private int column=5;
+    private ArrayList<Object []> data;
+   // Object[] columnNames = {"Название", "Описание", "Дата", "Контакты", "Выбрать"};
+    DefaultTableModel model = new DefaultTableModel();
     public TaskTable() {
-        data = new ArrayList<String []>();
-        for (int i=0; i<data.size(); i++){
-            data.add(new String[getColumnCount()]);
-        }
+        data = new ArrayList<Object []>();
+        for (int i=0; i<data.size(); i++)
+            data.add(new String[getColumnCount()]);         
     }
     @Override
     public int getRowCount() {
@@ -35,11 +36,11 @@ public class TaskTable extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        String []rows = data.get(rowIndex);         
+        Object []rows = data.get(rowIndex);         
         return rows[columnIndex];
     }
     
-    @Override
+   /*@Override
     public String getColumnName(int columnIndex){
         switch(columnIndex){
             case 0: return "Название";
@@ -48,20 +49,43 @@ public class TaskTable extends AbstractTableModel{
             case 3: return "Контакты";
         }
         return "";
+    }*/
+    @Override
+    public String getColumnName(int columnIndex){
+        switch(columnIndex){
+            case 0: return "Название";
+            case 1: return "Описание";
+            case 2: return "Дата";
+            case 3: return "Контакты";
+            case 4: return "Выбрать";
+        }
+        return "";
     }
-    public void addData(String[] row){
-        String []rowTable = new String[getColumnCount()];
+    
+    public Class<?> getColumnClass(int columnIndex){
+        switch(columnIndex){
+            case 0: return String.class;
+            case 1: return String.class;
+            case 2: return String.class;
+            case 3: return String.class;
+            default: return Boolean.class;
+           // default: return String.class;
+        }     
+    }
+    public void addData(Object[] row){
+        Object []rowTable = new String[getColumnCount()];
         rowTable=row;
         data.add(rowTable);
     }
     public void addTasks(TaskManager task){
         List<Task> tasks = task.getTasks();
         for(Task x : tasks){
-         String []row = {
+        Object []row = {
              x.getName(),
              x.getDescriptionOfTask(),
              x.getDateOfMessage(),
              x.getContacts(),
+             false,
       };
          addData(row);
     }

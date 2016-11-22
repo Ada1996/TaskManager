@@ -43,7 +43,7 @@ public class MainForm extends JFrame {
         TaskTable tTable=new TaskTable();
         JTable textTable = new JTable(tTable);
         JScrollPane scroll = new JScrollPane(textTable);       
-        scroll.setPreferredSize(new Dimension(400,400));
+        scroll.setPreferredSize(new Dimension(400,500));
         add(scroll,BorderLayout.WEST);
         tTable.addTasks(journ);
         newTask.addActionListener(new ActionListener() {
