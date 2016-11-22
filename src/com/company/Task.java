@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 public class Task implements Serializable {
@@ -27,8 +28,13 @@ public class Task implements Serializable {
         this.descriptionOfTask = descriptionOfTask;
     }
 
-    public GregorianCalendar getDateOfMessage() {
-        return dateOfMessage;
+    public String getDateOfMessage() {
+        StringBuffer str = new StringBuffer();
+        SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        f.setCalendar(this.dateOfMessage);
+        String dateFormatted = f.format(this.dateOfMessage.getTime());         
+        str.append(dateFormatted);
+        return str.toString();
     }
 
     public void setDateOfMessage(GregorianCalendar dateOfMessage) {
