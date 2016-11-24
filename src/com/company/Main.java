@@ -27,7 +27,6 @@ public class Main {
 
         System.out.println(journal.getCountTasks());*/
 
-
         MainForm form = new MainForm("Task Manager");
         form.setVisible(true);
         form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
