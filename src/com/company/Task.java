@@ -62,7 +62,5 @@ public class Task implements Serializable {
         this.contacts = contacts;
         this.descriptionOfTask = description;
         this.dateOfMessage = time;
-    }
-
-
+    }   
 }

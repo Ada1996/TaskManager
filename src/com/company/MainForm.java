@@ -5,9 +5,9 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
-
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 /**
  * Created by daryo on 17.11.2016.
  */
@@ -15,7 +15,6 @@ public class MainForm extends JFrame {
 
 
    // JLabel l1=new JLabel("ABC");
-
     public MainForm(String s) {
         super(s);
         setLayout(new BorderLayout());
@@ -67,8 +66,18 @@ public class MainForm extends JFrame {
         JScrollPane scroll = new JScrollPane(textTable);       
         scroll.setPreferredSize(new Dimension(400,400));
         add(scroll,BorderLayout.WEST);
+      
+      textTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableColumn column = null;
+        for (int i = 0; i < textTable.getColumnModel().getColumnCount(); i++) {
+            column = textTable.getColumnModel().getColumn(i);
+            String hv = column.getHeaderValue().toString();
+            JTableHeader th = textTable.getTableHeader();
+            FontMetrics fm = th.getFontMetrics(th.getFont());
+            column.setPreferredWidth(fm.stringWidth(hv)+25);
+        }     
         tTable.addTasks(journ);
-
+       
         //КНОПКА "НОВОЕ ЗАДАНИЕ"
         newTask.addActionListener(new ActionListener() {
             @Override
@@ -96,5 +105,5 @@ public class MainForm extends JFrame {
 
 
 
-    }
+        }
 }

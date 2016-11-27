@@ -22,7 +22,8 @@ public class TaskTable extends AbstractTableModel{
     public TaskTable() {
         data = new ArrayList<Object []>();
         for (int i=0; i<data.size(); i++)
-            data.add(new String[getColumnCount()]);         
+            data.add(new String[getColumnCount()]);
+        //model.
     }
     @Override
     public int getRowCount() {
@@ -53,23 +54,22 @@ public class TaskTable extends AbstractTableModel{
     @Override
     public String getColumnName(int columnIndex){
         switch(columnIndex){
-            case 0: return "Название";
-            case 1: return "Описание";
-            case 2: return "Дата";
-            case 3: return "Контакты";
-            case 4: return "Выбрать";
+            case 0: return "";
+            case 1: return "Название";
+            case 2: return "Описание";
+            case 3: return "Дата                 ";
+            case 4: return "Контакты";
         }
         return "";
     }
     
     public Class<?> getColumnClass(int columnIndex){
         switch(columnIndex){
-            case 0: return String.class;
+            case 0: return Boolean.class;
             case 1: return String.class;
             case 2: return String.class;
             case 3: return String.class;
-            default: return Boolean.class;
-           // default: return String.class;
+            default: return String.class;
         }     
     }
     public void addData(Object[] row){
@@ -81,11 +81,11 @@ public class TaskTable extends AbstractTableModel{
         List<Task> tasks = task.getTasks();
         for(Task x : tasks){
         Object []row = {
+             false,
              x.getName(),
              x.getDescriptionOfTask(),
              x.getDateOfMessage(),
              x.getContacts(),
-             false,
       };
          addData(row);
     }
