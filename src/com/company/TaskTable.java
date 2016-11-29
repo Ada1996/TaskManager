@@ -23,7 +23,6 @@ public class TaskTable extends AbstractTableModel{
         data = new ArrayList<Object []>();
         for (int i=0; i<data.size(); i++)
             data.add(new String[getColumnCount()]);
-        //model.
     }
     @Override
     public int getRowCount() {
@@ -57,7 +56,7 @@ public class TaskTable extends AbstractTableModel{
             case 0: return "";
             case 1: return "Название";
             case 2: return "Описание";
-            case 3: return "Дата                 ";
+            case 3: return "Дата        ";
             case 4: return "Контакты";
         }
         return "";

@@ -1,11 +1,10 @@
 package com.company;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.GregorianCalendar;
+import java.io.IOException;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 /**
@@ -13,9 +12,30 @@ import javax.swing.table.TableColumn;
  */
 public class MainForm extends JFrame {
 
-
-   // JLabel l1=new JLabel("ABC");
-    public MainForm(String s) {
+       private TaskManager journ = new TaskManager();     
+        private TaskTable tTable=new TaskTable();
+        private JTable textTable = new JTable(tTable);
+        private JScrollPane scroll = new JScrollPane(textTable);       
+    
+    public TaskManager getJourn(){
+        return journ;
+    }
+    public void buildTable(){
+        //РАБОТА С ТАБЛИЦЕЙ           
+        textTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableColumn column = null;
+        for (int i = 0; i < textTable.getColumnModel().getColumnCount(); i++) {
+            column = textTable.getColumnModel().getColumn(i);
+            String hv = column.getHeaderValue().toString();
+            JTableHeader th = textTable.getTableHeader();
+            FontMetrics fm = th.getFontMetrics(th.getFont());
+            column.setPreferredWidth(fm.stringWidth(hv)+25);
+        }     
+        tTable.addTasks(journ);
+    }
+  
+    public MainForm mainform=this;
+    public MainForm(String s) throws IOException, ClassNotFoundException {
         super(s);
         setLayout(new BorderLayout());
         JLabel l1=new JLabel("<html>Ты видел деву на скале<br>" +
@@ -31,19 +51,20 @@ public class MainForm extends JFrame {
                 "Но верь мне: дева на скале<br>" +
                 "Прекрасней волн, небес и бури.</html>");
         l1.setVerticalAlignment(JLabel.TOP);
-        l1.setPreferredSize(new Dimension(200, 400));
+        l1.setPreferredSize(new Dimension(200, 500));
         add(l1);
 
         //МЕНЮШКА
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(Color.lightGray);
 
-
+        JButton file = new JButton("Файл");
         JButton newTask = new JButton("Новое Задание");
         JButton changeTask = new JButton("Изменить задание");
         JButton deleteTask = new JButton("Удалить задание");
         JLabel whatsUp = new JLabel("Системные сообщения:");
 
+        menuBar.add(file);
         menuBar.add(newTask);
         menuBar.add(changeTask);
         menuBar.add(deleteTask);
@@ -51,45 +72,29 @@ public class MainForm extends JFrame {
 
         setJMenuBar(menuBar);
 
-
-        //СОЗДАНИЕ СПИСКА ЗАДАНИЙ
-        Task e = new Task("First Task", "blabla", new GregorianCalendar(1996, 11, 15, 23, 11), "tetya");
-        Task e1 = new Task("Second Task", "blabla", new GregorianCalendar(1996, 11, 15, 23, 7), "tetya");
-        TaskManager journ = new TaskManager(); 
-        journ.add(e);
-        journ.add(e1);
-
-
-        //РАБОТА С ТАБЛИЦЕЙ
-        TaskTable tTable=new TaskTable();
-        JTable textTable = new JTable(tTable);
-        JScrollPane scroll = new JScrollPane(textTable);       
-        scroll.setPreferredSize(new Dimension(400,400));
+        scroll.setPreferredSize(new Dimension(400,500));
         add(scroll,BorderLayout.WEST);
-      
-      textTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        TableColumn column = null;
-        for (int i = 0; i < textTable.getColumnModel().getColumnCount(); i++) {
-            column = textTable.getColumnModel().getColumn(i);
-            String hv = column.getHeaderValue().toString();
-            JTableHeader th = textTable.getTableHeader();
-            FontMetrics fm = th.getFontMetrics(th.getFont());
-            column.setPreferredWidth(fm.stringWidth(hv)+25);
-        }     
-        tTable.addTasks(journ);
        
         //КНОПКА "НОВОЕ ЗАДАНИЕ"
         newTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddForm form1 = new AddForm("Заполните поля");
+                AddForm form1 = new AddForm("Заполните поля",mainform);
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form1.setSize(310, 200);
+                form1.setSize(410, 300);
 
             }
         });
-
+        //КНОПКА ФАЙЛ
+        file.addActionListener (new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                FileForm form2 = new FileForm("Укажите путь к папке", mainform);               
+                form2.setVisible(true);               
+                form2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                form2.setSize(430, 140);              
+            }
+        });
 
         //КНОПКА "ИЗМЕНИТЬ ЗАДАНИЕ"
         changeTask.addActionListener(new ActionListener() {

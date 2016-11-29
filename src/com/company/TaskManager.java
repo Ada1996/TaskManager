@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.File;
 import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -7,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class TaskManager {
 
@@ -49,4 +51,20 @@ public class TaskManager {
         Task ts = (Task) oin.readObject();
         return ts;
     }
+     public void writeTasks(String s){
+        File f = null;
+        File[] paths;     //"C:\\Users\\Настя\\Documents\\NetBeansProjects\\TaskManager\\Tasks"
+        try{      
+            f = new File(s);       
+            paths = f.listFiles();        
+            for(File path:paths)  {   
+                String pathStr=path.toString();
+                if (pathStr.substring(pathStr.length()-3, pathStr.length()).equals("txt")){
+                   Task task = TaskManager.getTaskFromFile(pathStr);
+                   this.add(task);
+                }
+            }
+         }
+        catch(Exception e){JOptionPane.showMessageDialog(null, "Неверный путь!", "Ошибка", JOptionPane.ERROR_MESSAGE);}
+   }
 }
