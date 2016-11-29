@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -11,17 +12,16 @@ import javax.swing.table.TableColumn;
  * Created by daryo on 17.11.2016.
  */
 public class MainForm extends JFrame {
-
-       private TaskManager journ = new TaskManager();     
-        private TaskTable tTable=new TaskTable();
-        private JTable textTable = new JTable(tTable);
-        private JScrollPane scroll = new JScrollPane(textTable);       
+        private String path;
+       private TaskManager journ;    
+        private TaskTable tTable;
+        private JTable textTable;
+        private JScrollPane scroll;     
     
     public TaskManager getJourn(){
         return journ;
     }
     public void buildTable(){
-        //РАБОТА С ТАБЛИЦЕЙ           
         textTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         TableColumn column = null;
         for (int i = 0; i < textTable.getColumnModel().getColumnCount(); i++) {
@@ -30,13 +30,34 @@ public class MainForm extends JFrame {
             JTableHeader th = textTable.getTableHeader();
             FontMetrics fm = th.getFontMetrics(th.getFont());
             column.setPreferredWidth(fm.stringWidth(hv)+25);
-        }     
-        tTable.addTasks(journ);
+        }          
     }
-  
+    public void writeTasks(String s){
+        journ=new TaskManager();
+        File f = null;
+        File[] paths;     //"C:\\Users\\Настя\\Documents\\NetBeansProjects\\TaskManager"
+        try{      
+            f = new File(s);       
+            paths = f.listFiles();        
+            for(File path:paths)  {   
+                String pathStr=path.toString();
+                if (pathStr.lastIndexOf("txt")==(pathStr.length()-3)){
+                   Task task = TaskManager.getTaskFromFile(pathStr);
+                   journ.add(task);
+                }
+            }
+            tTable.deleteTasks();
+            tTable.addTasks(journ);
+            textTable.updateUI();
+         }
+        catch(Exception e){JOptionPane.showMessageDialog(null, "Неверный путь!", "Ошибка", JOptionPane.ERROR_MESSAGE);}
+   }
     public MainForm mainform=this;
     public MainForm(String s) throws IOException, ClassNotFoundException {
         super(s);
+        journ=new TaskManager();
+        tTable = new TaskTable();
+        textTable = new JTable(tTable);
         setLayout(new BorderLayout());
         JLabel l1=new JLabel("<html>Ты видел деву на скале<br>" +
                 "В одежде белой над волнами<br>" +
@@ -71,7 +92,7 @@ public class MainForm extends JFrame {
         menuBar.add(whatsUp);
 
         setJMenuBar(menuBar);
-
+        scroll = new JScrollPane(textTable);
         scroll.setPreferredSize(new Dimension(400,500));
         add(scroll,BorderLayout.WEST);
        
@@ -79,11 +100,11 @@ public class MainForm extends JFrame {
         newTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddForm form1 = new AddForm("Заполните поля",mainform);
+                AddForm form1 = new AddForm("Заполните поля",mainform,path);
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 form1.setSize(410, 300);
-
+                
             }
         });
         //КНОПКА ФАЙЛ
@@ -92,7 +113,8 @@ public class MainForm extends JFrame {
                 FileForm form2 = new FileForm("Укажите путь к папке", mainform);               
                 form2.setVisible(true);               
                 form2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form2.setSize(430, 140);              
+                form2.setSize(430, 140);
+                path=form2.getPath();
             }
         });
 

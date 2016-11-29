@@ -17,7 +17,7 @@ import javax.swing.JTextField;
  * @author Настя
  */
 public class FileForm extends JFrame {
-    private String path;
+    public static String path;
     public FileForm(String s, MainForm parentForm) {
         super(s);
         setLayout(null);
@@ -34,9 +34,9 @@ public class FileForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 path = pathField.getText();
-                if (path!=null && !path.equals(""))
+                if (path!=null && path!=(""))
                 {
-                    parentForm.getJourn().writeTasks(path);
+                    parentForm.writeTasks(path);
                     parentForm.buildTable();
                 }
                 dispose();

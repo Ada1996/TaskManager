@@ -13,8 +13,9 @@ import java.util.logging.Logger;
  * Created by daryo on 18.11.2016.
  */
 public class AddForm extends JFrame {
-
-    public AddForm(String s, MainForm parentForm) {
+   
+    public AddForm(String s, MainForm parentForm, String p) {
+        
         super(s);
         setLayout(null);
 
@@ -101,7 +102,8 @@ public class AddForm extends JFrame {
                     GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()), Integer.parseInt(day.getText()), Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()));
                     Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
                     TaskManager tm = new TaskManager();
-                    tm.addTaskToFile(t, name.getText()+".txt");
+                    tm.addTaskToFile(t, name.getText()+".txt");                   
+                    parentForm.writeTasks(FileForm.path);             
                     int k = 0;              
                     dispose();
                 } catch (IOException e) {

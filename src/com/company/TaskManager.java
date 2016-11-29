@@ -51,20 +51,5 @@ public class TaskManager {
         Task ts = (Task) oin.readObject();
         return ts;
     }
-     public void writeTasks(String s){
-        File f = null;
-        File[] paths;     //"C:\\Users\\Настя\\Documents\\NetBeansProjects\\TaskManager\\Tasks"
-        try{      
-            f = new File(s);       
-            paths = f.listFiles();        
-            for(File path:paths)  {   
-                String pathStr=path.toString();
-                if (pathStr.substring(pathStr.length()-3, pathStr.length()).equals("txt")){
-                   Task task = TaskManager.getTaskFromFile(pathStr);
-                   this.add(task);
-                }
-            }
-         }
-        catch(Exception e){JOptionPane.showMessageDialog(null, "Неверный путь!", "Ошибка", JOptionPane.ERROR_MESSAGE);}
-   }
+     
 }

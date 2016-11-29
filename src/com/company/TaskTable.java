@@ -85,8 +85,11 @@ public class TaskTable extends AbstractTableModel{
              x.getDescriptionOfTask(),
              x.getDateOfMessage(),
              x.getContacts(),
-      };
+        };
          addData(row);
+        }
     }
+    public void deleteTasks (){
+        data = new ArrayList<Object []>();
     }
 }
