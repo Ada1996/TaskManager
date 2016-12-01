@@ -10,14 +10,14 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
- * Created by daryo on 18.11.2016.
+ * Created by daryo on 01.12.2016.
  */
-public class AddForm extends JFrame {
-   
-    public AddForm(String s, MainForm parentForm, String p) {
-        
+
+public class ChangeForm extends JFrame {
+
+    public ChangeForm(String s, MainForm parentForm, String p, Task cTask) {
+
         super(s);
         setLayout(null);
         //                     КОМПОНЕНТЫ ФОРМЫ                     //
@@ -25,7 +25,7 @@ public class AddForm extends JFrame {
 
         //ИМЯ ЗАДАНИЯ
         JLabel lname = new JLabel("Имя задания:");
-        JTextField name = new JTextField("", 17);
+        JTextField name = new JTextField(cTask.getName());
         add(lname);
         add(name);
         lname.setBounds(0, 0, 100, 20);
@@ -33,7 +33,7 @@ public class AddForm extends JFrame {
 
         //ОПИСАНИЕ
         JLabel ldescription = new JLabel("Описание:");
-        JTextField description = new JTextField("", 17);
+        JTextField description = new JTextField(cTask.getDescriptionOfTask());
         add(ldescription);
         add(description);
         ldescription.setBounds(0, 25, 100, 20);
@@ -41,7 +41,7 @@ public class AddForm extends JFrame {
 
         //КОНТАКТЫ
         JLabel lcontacts = new JLabel("Контакты:");
-        JTextField contacts = new JTextField("", 17);
+        JTextField contacts = new JTextField(cTask.getContacts());
         add(lcontacts);
         add(contacts);
         lcontacts.setBounds(0, 50, 100, 20);
@@ -49,7 +49,8 @@ public class AddForm extends JFrame {
 
         //ДАТА
         JLabel ldate = new JLabel("Дата (ggg-mm-dd hh-mm):");
-        JTextField date = new JTextField();
+
+        JTextField date = new JTextField(cTask.getDateOfMessage().toString());
         add(ldate);
         add(date);
         ldate.setBounds(0, 75, 200, 20);
@@ -57,7 +58,7 @@ public class AddForm extends JFrame {
 
 
         //СООБЩЕНИЯ ОБ ОШИБКАХ
-        JLabel systemMessage = new JLabel("<html>Здесь будут выводиться сообщения об ошибках</html>");
+        JLabel systemMessage = new JLabel("<html></html>");
         systemMessage.setForeground(Color.red);
         add(systemMessage);
         systemMessage.setBounds(0, 100, 400, 20);
@@ -73,15 +74,17 @@ public class AddForm extends JFrame {
                 try {
                     String sb = new String(date.getText());
                     String[] strings = sb.split("[ ,.-]");
-
                     GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
                     Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
 
                     TaskManager tm = new TaskManager();
-                    tm.addTaskToFile(t, name.getText()+".txt");                   
-                    parentForm.writeTasks(FileForm.path);             
-                    int k = 0;              
+
+
+                    parentForm.removeTask();
+                    tm.addTaskToFile(t, name.getText()+".txt");
+                    parentForm.writeTasks(FileForm.path);
+
                     dispose();
                 } catch (IOException e) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
@@ -95,7 +98,5 @@ public class AddForm extends JFrame {
                 }
             }
         });
-
-
     }
 }

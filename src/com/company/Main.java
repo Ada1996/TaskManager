@@ -30,7 +30,7 @@ public class Main {
         MainForm form = new MainForm("Task Manager");
         form.setVisible(true);
         form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        form.setSize(600, 400);
+        form.setSize(650, 400);
 
     }
 }
