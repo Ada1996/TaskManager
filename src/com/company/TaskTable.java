@@ -15,12 +15,11 @@ import javax.swing.table.DefaultTableModel;
  * @author Настя
  */
 public class TaskTable extends AbstractTableModel{
-    private int column=5;
-    private ArrayList<Object []> data;
-   // Object[] columnNames = {"Название", "Описание", "Дата", "Контакты", "Выбрать"};
+    private int column=4;
+    private ArrayList<String []> data;
     DefaultTableModel model = new DefaultTableModel();
     public TaskTable() {
-        data = new ArrayList<Object []>();
+        data = new ArrayList<String []>();
         for (int i=0; i<data.size(); i++)
             data.add(new String[getColumnCount()]);
     }
@@ -40,7 +39,11 @@ public class TaskTable extends AbstractTableModel{
         return rows[columnIndex];
     }
     
-   /*@Override
+   public void updateValue(Object newValue, int rowIndex, int columnIndex){
+        Object[] row = data.get(rowIndex);
+        row[columnIndex] = newValue;
+   }
+   @Override
     public String getColumnName(int columnIndex){
         switch(columnIndex){
             case 0: return "Название";
@@ -49,38 +52,16 @@ public class TaskTable extends AbstractTableModel{
             case 3: return "Контакты";
         }
         return "";
-    }*/
-    @Override
-    public String getColumnName(int columnIndex){
-        switch(columnIndex){
-            case 0: return "";
-            case 1: return "Название";
-            case 2: return "Описание";
-            case 3: return "Дата        ";
-            case 4: return "Контакты";
-        }
-        return "";
-    }
-    
-    public Class<?> getColumnClass(int columnIndex){
-        switch(columnIndex){
-            case 0: return Boolean.class;
-            case 1: return String.class;
-            case 2: return String.class;
-            case 3: return String.class;
-            default: return String.class;
-        }     
-    }
-    public void addData(Object[] row){
-        Object []rowTable = new String[getColumnCount()];
+    }   
+    public void addData(String[] row){
+        String []rowTable = new String[getColumnCount()];
         rowTable=row;
         data.add(rowTable);
     }
     public void addTasks(TaskManager task){
         List<Task> tasks = task.getTasks();
         for(Task x : tasks){
-        Object []row = {
-             false,
+        String []row = {
              x.getName(),
              x.getDescriptionOfTask(),
              x.getDateOfMessage(),
@@ -90,6 +71,6 @@ public class TaskTable extends AbstractTableModel{
         }
     }
     public void deleteTasks (){
-        data = new ArrayList<Object []>();
+        data = new ArrayList<>();
     }
 }

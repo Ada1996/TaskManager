@@ -12,11 +12,12 @@ import javax.swing.table.TableColumn;
  * Created by daryo on 17.11.2016.
  */
 public class MainForm extends JFrame {
-        private String path;
-       private TaskManager journ;    
+        public static String pathCatalog;
+        File catalog;
+        private TaskManager journ;    
         private TaskTable tTable;
         private JTable textTable;
-        private JScrollPane scroll;     
+        private JScrollPane scroll;    
     
     public TaskManager getJourn(){
         return journ;
@@ -32,12 +33,11 @@ public class MainForm extends JFrame {
             column.setPreferredWidth(fm.stringWidth(hv)+25);
         }          
     }
-    public void writeTasks(String s){
+    public void outputTasks(String pathCatalog) throws IOException, ClassNotFoundException{
         journ=new TaskManager();
         File f = null;
-        File[] paths;     //"C:\\Users\\Настя\\Documents\\NetBeansProjects\\TaskManager"
-        try{      
-            f = new File(s);       
+        File[] paths;                 
+            f = new File(pathCatalog);       
             paths = f.listFiles();        
             for(File path:paths)  {   
                 String pathStr=path.toString();
@@ -49,12 +49,19 @@ public class MainForm extends JFrame {
             tTable.deleteTasks();
             tTable.addTasks(journ);
             textTable.updateUI();
-         }
-        catch(Exception e){JOptionPane.showMessageDialog(null, "Неверный путь!", "Ошибка", JOptionPane.ERROR_MESSAGE);}
+         
+      
    }
     public MainForm mainform=this;
-    public MainForm(String s) throws IOException, ClassNotFoundException {
+    public MainForm(String s) throws IOException, ClassNotFoundException {       
         super(s);
+        //ПОЛУЧЕНИЕ ПУТИ К КОРНЕВОЙ ПАПКЕ ПРОЕКТА, СОЗДАНИЕ ПАПКИ TASKS
+        String pathRoot = System.getProperty("user.dir");
+        pathCatalog = pathRoot+"\\Tasks";
+        if(!new File(pathCatalog).exists()){
+            catalog = new File(pathCatalog);
+        }        
+        
         journ=new TaskManager();
         tTable = new TaskTable();
         textTable = new JTable(tTable);
@@ -79,13 +86,11 @@ public class MainForm extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(Color.lightGray);
 
-        JButton file = new JButton("Файл");
         JButton newTask = new JButton("Новое Задание");
         JButton changeTask = new JButton("Изменить задание");
         JButton deleteTask = new JButton("Удалить задание");
         JLabel whatsUp = new JLabel("Системные сообщения:");
 
-        menuBar.add(file);
         menuBar.add(newTask);
         menuBar.add(changeTask);
         menuBar.add(deleteTask);
@@ -93,30 +98,23 @@ public class MainForm extends JFrame {
 
         setJMenuBar(menuBar);
         scroll = new JScrollPane(textTable);
-        scroll.setPreferredSize(new Dimension(400,500));
+        scroll.setPreferredSize(new Dimension(400,400));
         add(scroll,BorderLayout.WEST);
-       
+        
+        
+        outputTasks(pathCatalog);
+        buildTable();               
         //КНОПКА "НОВОЕ ЗАДАНИЕ"
         newTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddForm form1 = new AddForm("Заполните поля",mainform,path);
+                AddForm form1 = new AddForm("Заполните поля",mainform);
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 form1.setSize(410, 300);
                 
             }
-        });
-        //КНОПКА ФАЙЛ
-        file.addActionListener (new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                FileForm form2 = new FileForm("Укажите путь к папке", mainform);               
-                form2.setVisible(true);               
-                form2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form2.setSize(430, 140);
-                path=form2.getPath();
-            }
-        });
+        });       
 
         //КНОПКА "ИЗМЕНИТЬ ЗАДАНИЕ"
         changeTask.addActionListener(new ActionListener() {
@@ -124,13 +122,6 @@ public class MainForm extends JFrame {
             public void actionPerformed(ActionEvent event) {
 
             }
-        });
-
-
-
-
-
-
-
-        }
+        });                                  
+    }
 }

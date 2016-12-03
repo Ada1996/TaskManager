@@ -1,6 +1,5 @@
 package com.company;
 
-import java.io.File;
 import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -8,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 public class TaskManager {
 
@@ -39,14 +37,14 @@ public class TaskManager {
         return tasks;
     }
 
-    public static void addTaskToFile(Task Task, String name) throws IOException {
-        FileOutputStream fos = new FileOutputStream(name);
+    public static void addTaskToFile(Task Task, String pathToFile) throws IOException {
+        FileOutputStream fos = new FileOutputStream(pathToFile);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(Task);
     }
 
-    public static Task getTaskFromFile(String name) throws IOException, ClassNotFoundException{
-        FileInputStream fis = new FileInputStream(name);
+    public static Task getTaskFromFile(String pathToFile) throws IOException, ClassNotFoundException{
+        FileInputStream fis = new FileInputStream(pathToFile);
         ObjectInputStream oin = new ObjectInputStream(fis);
         Task ts = (Task) oin.readObject();
         return ts;
