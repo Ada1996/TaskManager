@@ -15,6 +15,16 @@ import javax.swing.table.TableColumn;
  * Created by daryo on 17.11.2016.
  */
 public class MainForm extends JFrame {
+<<<<<<< HEAD
+        public static String pathCatalog;
+        File catalog;
+        private TaskManager journ;    
+        private TaskTable tTable;
+        private JTable textTable;
+        private JScrollPane scroll;    
+    
+    public TaskManager getJourn(){
+=======
     private String path;
     private TaskManager journ;
     private TaskTable tTable;
@@ -22,6 +32,7 @@ public class MainForm extends JFrame {
     private JScrollPane scroll;
 
     public TaskManager getJourn() {
+>>>>>>> origin/master
         return journ;
     }
 
@@ -36,6 +47,19 @@ public class MainForm extends JFrame {
             column.setPreferredWidth(fm.stringWidth(hv) + 25);
         }
     }
+<<<<<<< HEAD
+    public void outputTasks(String pathCatalog) throws IOException, ClassNotFoundException{
+        journ=new TaskManager();
+        File f = null;
+        File[] paths;                 
+            f = new File(pathCatalog);       
+            paths = f.listFiles();        
+            for(File path:paths)  {   
+                String pathStr=path.toString();
+                if (pathStr.lastIndexOf("txt")==(pathStr.length()-3)){
+                   Task task = TaskManager.getTaskFromFile(pathStr);
+                   journ.add(task);
+=======
 
     public void writeTasks(String s) {
         journ = new TaskManager();
@@ -50,11 +74,28 @@ public class MainForm extends JFrame {
                 if (pathStr.lastIndexOf("txt") == (pathStr.length() - 3)) {
                     Task task = TaskManager.getTaskFromFile(pathStr);
                     journ.add(task);
+>>>>>>> origin/master
                 }
             }
             tTable.deleteTasks();
             tTable.addTasks(journ);
             textTable.updateUI();
+<<<<<<< HEAD
+         
+      
+   }
+    public MainForm mainform=this;
+    public MainForm(String s) throws IOException, ClassNotFoundException {       
+        super(s);
+        //ПОЛУЧЕНИЕ ПУТИ К КОРНЕВОЙ ПАПКЕ ПРОЕКТА, СОЗДАНИЕ ПАПКИ TASKS
+        String pathRoot = System.getProperty("user.dir");
+        pathCatalog = pathRoot+"\\Tasks";
+        if(!new File(pathCatalog).exists()){
+            catalog = new File(pathCatalog);
+        }        
+        
+        journ=new TaskManager();
+=======
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Неверный путь!", "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
@@ -90,6 +131,7 @@ public class MainForm extends JFrame {
     public MainForm(String s) throws IOException, ClassNotFoundException {
         super(s);
         journ = new TaskManager();
+>>>>>>> origin/master
         tTable = new TaskTable();
         textTable = new JTable(tTable);
         setLayout(new BorderLayout());
@@ -113,13 +155,11 @@ public class MainForm extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(Color.lightGray);
 
-        JButton file = new JButton("Файл");
         JButton newTask = new JButton("Новое Задание");
         JButton changeTask = new JButton("   Изменить   ");
         JButton deleteTask = new JButton("   Удалить   ");
         JLabel whatsUp = new JLabel("Системные сообщения:");
 
-        menuBar.add(file);
         menuBar.add(newTask);
         menuBar.add(changeTask);
         menuBar.add(deleteTask);
@@ -127,6 +167,14 @@ public class MainForm extends JFrame {
 
         setJMenuBar(menuBar);
         scroll = new JScrollPane(textTable);
+<<<<<<< HEAD
+        scroll.setPreferredSize(new Dimension(400,400));
+        add(scroll,BorderLayout.WEST);
+        
+        
+        outputTasks(pathCatalog);
+        buildTable();               
+=======
         scroll.setPreferredSize(new Dimension(400, 500));
         add(scroll, BorderLayout.WEST);
 
@@ -141,10 +189,20 @@ public class MainForm extends JFrame {
                 path = form2.getPath();
             }
         });
+>>>>>>> origin/master
         //КНОПКА "НОВОЕ ЗАДАНИЕ"
         newTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
+                AddForm form1 = new AddForm("Заполните поля",mainform);
+                form1.setVisible(true);
+                form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                form1.setSize(410, 300);
+                
+            }
+        });       
+=======
                 AddForm form1 = new AddForm("Заполните поля", mainform, path);
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -152,6 +210,7 @@ public class MainForm extends JFrame {
 
             }
         });
+>>>>>>> origin/master
 
 
         //КНОПКА "ИЗМЕНИТЬ ЗАДАНИЕ"
@@ -161,6 +220,10 @@ public class MainForm extends JFrame {
                 String date =(String)textTable.getValueAt(textTable.getSelectedRow(), 3);
                 String[] strings = date.split("[ /,.-[:]]");
 
+<<<<<<< HEAD
+            }
+        });                                  
+=======
                 GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]),Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
                 Task t = new Task((String)textTable.getValueAt(textTable.getSelectedRow(), 1), (String)textTable.getValueAt(textTable.getSelectedRow(), 2), gc, (String)textTable.getValueAt(textTable.getSelectedRow(), 4));
 
@@ -188,5 +251,6 @@ public class MainForm extends JFrame {
             e.printStackTrace();
         }*/
 //D:\Labs\NetCracker\TaskM
+>>>>>>> origin/master
     }
 }
