@@ -46,6 +46,7 @@ public class MainForm extends JFrame {
             paths = f.listFiles();
             for (File path : paths) {
                 String pathStr = path.toString();
+                System.out.println("pathStr = " + pathStr);
                 if (pathStr.lastIndexOf("txt") == (pathStr.length() - 3)) {
                     Task task = TaskManager.getTaskFromFile(pathStr);
                     journ.add(task);
@@ -59,20 +60,31 @@ public class MainForm extends JFrame {
         }
     }
 
-    public void removeTask()
+  /*  public void removeTask() throws IOException, ClassNotFoundException
     {
         StringBuilder sb = new StringBuilder(FileForm.path);
+        String fileName;
         sb.deleteCharAt(sb.length() - 1);
-        sb.append("\\" + textTable.getValueAt(textTable.getSelectedRow(), 1) + ".txt");
-        String fileName = sb.toString();
-        //fileName = fileName.replace("\\", "/");
+        for(int i=0;i<textTable.getSelectedRowCount();i++)
+        {
+            sb.append("\\" + textTable.getValueAt(textTable.getSelectedRows()[0], 1) + ".txt");
+            fileName = sb.toString();
+            fileName = fileName.replace("\\", "/");
+
+            //File delFile = new File(fileName);
+
+            File file = new File("1.txt");
 
 
-        File delFile = new File(fileName);
-        delFile.delete();
 
+            Task task = TaskManager.getTaskFromFile(fileName);
+            System.out.println("name = " + task.getName());
+            //delFile.delete();
+        }
         writeTasks(FileForm.path);
-    }
+    }*/
+
+
     public MainForm mainform = this;
 
     public MainForm(String s) throws IOException, ClassNotFoundException {
@@ -164,10 +176,17 @@ public class MainForm extends JFrame {
         deleteTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                removeTask();
+
             }
         });
 
+       /* try {
+            removeTask();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }*/
 //D:\Labs\NetCracker\TaskM
     }
 }

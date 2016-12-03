@@ -81,7 +81,11 @@ public class ChangeForm extends JFrame {
                     TaskManager tm = new TaskManager();
 
 
-                    parentForm.removeTask();
+                    try {
+                        parentForm.removeTask();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     tm.addTaskToFile(t, name.getText()+".txt");
                     parentForm.writeTasks(FileForm.path);
 
