@@ -187,18 +187,15 @@ public class MainForm extends JFrame {
                 String[] strings = date.split("[ /,.-[:]]");
                 GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
-                System.out.println(gc);
                 StringBuffer str = new StringBuffer();
                 SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy HH:mm");
                 f.setCalendar(gc);
                 String dateFormatted = f.format(gc.getTime());
                 str.append(dateFormatted);
-                System.out.println(str.toString());
 
 
                 Task t = new Task((String) textTable.getValueAt(textTable.getSelectedRow(), 0), (String) textTable.getValueAt(textTable.getSelectedRow(), 1), gc, (String) textTable.getValueAt(textTable.getSelectedRow(), 3));
 
-                System.out.println(t.getDateOfMessage());
                 ChangeForm form1 = new ChangeForm("Измените поля", mainForm, t);
 
                 form1.setVisible(true);
