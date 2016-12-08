@@ -16,16 +16,16 @@ import java.util.logging.Logger;
  */
 public class AddForm extends JFrame {
    
-    public AddForm(String s, MainForm parentForm) {
+    public AddForm(String nameForm, MainForm parentForm) {
         
-        super(s);
+        super(nameForm);
         setLayout(null);
         //                     КОМПОНЕНТЫ ФОРМЫ                     //
 
 
         //ИМЯ ЗАДАНИЯ
         JLabel lname = new JLabel("Имя задания:");
-        JTextField name = new JTextField("", 17);
+        JTextField name = new JTextField("");
         add(lname);
         add(name);
         lname.setBounds(0, 0, 100, 20);
@@ -33,7 +33,7 @@ public class AddForm extends JFrame {
 
         //ОПИСАНИЕ
         JLabel ldescription = new JLabel("Описание:");
-        JTextField description = new JTextField("", 17);
+        JTextField description = new JTextField("");
         add(ldescription);
         add(description);
         ldescription.setBounds(0, 25, 100, 20);
@@ -41,7 +41,7 @@ public class AddForm extends JFrame {
 
         //КОНТАКТЫ
         JLabel lcontacts = new JLabel("Контакты:");
-        JTextField contacts = new JTextField("", 17);
+        JTextField contacts = new JTextField("");
         add(lcontacts);
         add(contacts);
         lcontacts.setBounds(0, 50, 100, 20);

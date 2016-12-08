@@ -16,9 +16,9 @@ import java.util.logging.Logger;
 
 public class ChangeForm extends JFrame {
 
-    public ChangeForm(String s, MainForm parentForm, String p, Task cTask) {
+    public ChangeForm(String nameForm, MainForm parentForm, Task cTask) {
 
-        super(s);
+        super(nameForm);
         setLayout(null);
         //                     КОМПОНЕНТЫ ФОРМЫ                     //
 
@@ -50,6 +50,7 @@ public class ChangeForm extends JFrame {
         //ДАТА
         JLabel ldate = new JLabel("Дата (ggg-mm-dd hh-mm):");
 
+        System.out.println(cTask.getDateOfMessage().toString());
         JTextField date = new JTextField(cTask.getDateOfMessage().toString());
         add(ldate);
         add(date);
@@ -73,17 +74,14 @@ public class ChangeForm extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 try {
                     String sb = new String(date.getText());
-                    String[] strings = sb.split("[ ,.-]");
+                    String[] strings = sb.split("[ /,.-[:]]");
                     GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
                     Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
 
-                    TaskManager tm = new TaskManager();
 
+                    TaskManager.addTaskToFile(t, name.getText()+".txt");
 
-                    parentForm.removeTask();
-                    tm.addTaskToFile(t, name.getText()+".txt");
-                    parentForm.writeTasks(FileForm.path);
 
                     dispose();
                 } catch (IOException e) {
