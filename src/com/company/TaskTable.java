@@ -48,7 +48,7 @@ public class TaskTable extends AbstractTableModel{
         switch(columnIndex){
             case 0: return "Название";
             case 1: return "Описание";
-            case 2: return "Дата";
+            case 2: return "          Дата          ";
             case 3: return "Контакты";
         }
         return "";

@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
@@ -15,24 +17,16 @@ import javax.swing.table.TableColumn;
  * Created by daryo on 17.11.2016.
  */
 public class MainForm extends JFrame {
-<<<<<<< HEAD
+
         public static String pathCatalog;
         File catalog;
         private TaskManager journ;    
         private TaskTable tTable;
         private JTable textTable;
         private JScrollPane scroll;    
+        public MainForm mainform=this;
     
-    public TaskManager getJourn(){
-=======
-    private String path;
-    private TaskManager journ;
-    private TaskTable tTable;
-    private JTable textTable;
-    private JScrollPane scroll;
-
-    public TaskManager getJourn() {
->>>>>>> origin/master
+        public TaskManager getJourn(){
         return journ;
     }
 
@@ -47,7 +41,18 @@ public class MainForm extends JFrame {
             column.setPreferredWidth(fm.stringWidth(hv) + 25);
         }
     }
-<<<<<<< HEAD
+    public void removeTask() throws IOException, ClassNotFoundException
+    {
+        StringBuilder sb = new StringBuilder(pathCatalog);
+        sb.append("\\" + textTable.getValueAt(textTable.getSelectedRow(), 1) + ".txt");
+        String fileName = sb.toString();
+        //fileName = fileName.replace("\\", "/");
+        System.out.println(fileName);
+        File delFile = new File(fileName);
+        System.gc();
+        delFile.delete();
+        outputTasks(pathCatalog);
+    }
     public void outputTasks(String pathCatalog) throws IOException, ClassNotFoundException{
         journ=new TaskManager();
         File f = null;
@@ -59,31 +64,13 @@ public class MainForm extends JFrame {
                 if (pathStr.lastIndexOf("txt")==(pathStr.length()-3)){
                    Task task = TaskManager.getTaskFromFile(pathStr);
                    journ.add(task);
-=======
-
-    public void writeTasks(String s) {
-        journ = new TaskManager();
-        File f = null;
-        File[] paths;     //"C:\\Users\\Настя\\Documents\\NetBeansProjects\\TaskManager"
-        try {
-            f = new File(s);
-            paths = f.listFiles();
-            for (File path : paths) {
-                String pathStr = path.toString();
-                if (pathStr.lastIndexOf("txt") == (pathStr.length() - 3)) {
-                    Task task = TaskManager.getTaskFromFile(pathStr);
-                    journ.add(task);
->>>>>>> origin/master
                 }
-            }
             tTable.deleteTasks();
             tTable.addTasks(journ);
-            textTable.updateUI();
-<<<<<<< HEAD
-         
-      
+            textTable.updateUI();   
+            }
    }
-    public MainForm mainform=this;
+    public MainForm mainForm=this;
     public MainForm(String s) throws IOException, ClassNotFoundException {       
         super(s);
         //ПОЛУЧЕНИЕ ПУТИ К КОРНЕВОЙ ПАПКЕ ПРОЕКТА, СОЗДАНИЕ ПАПКИ TASKS
@@ -91,35 +78,8 @@ public class MainForm extends JFrame {
         pathCatalog = pathRoot+"\\Tasks";
         if(!new File(pathCatalog).exists()){
             catalog = new File(pathCatalog);
-        }        
-        
+        }                
         journ=new TaskManager();
-=======
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Неверный путь!", "Ошибка", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    public void removeTask()
-    {
-        StringBuilder sb = new StringBuilder(FileForm.path);
-        sb.deleteCharAt(sb.length() - 1);
-        sb.append("\\" + textTable.getValueAt(textTable.getSelectedRow(), 1) + ".txt");
-        String fileName = sb.toString();
-        //fileName = fileName.replace("\\", "/");
-
-
-        File delFile = new File(fileName);
-        delFile.delete();
-
-        writeTasks(FileForm.path);
-    }
-    public MainForm mainform = this;
-
-    public MainForm(String s) throws IOException, ClassNotFoundException {
-        super(s);
-        journ = new TaskManager();
->>>>>>> origin/master
         tTable = new TaskTable();
         textTable = new JTable(tTable);
         setLayout(new BorderLayout());
@@ -155,83 +115,46 @@ public class MainForm extends JFrame {
 
         setJMenuBar(menuBar);
         scroll = new JScrollPane(textTable);
-<<<<<<< HEAD
         scroll.setPreferredSize(new Dimension(400,400));
         add(scroll,BorderLayout.WEST);
         
         
         outputTasks(pathCatalog);
         buildTable();               
-=======
-        scroll.setPreferredSize(new Dimension(400, 500));
-        add(scroll, BorderLayout.WEST);
 
-
-        //КНОПКА ФАЙЛ
-        file.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                FileForm form2 = new FileForm("Укажите путь к папке", mainform);
-                form2.setVisible(true);
-                form2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form2.setSize(430, 140);
-                path = form2.getPath();
-            }
-        });
->>>>>>> origin/master
+       
         //КНОПКА "НОВОЕ ЗАДАНИЕ"
         newTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-                AddForm form1 = new AddForm("Заполните поля",mainform);
+                AddForm form1 = new AddForm("Заполните поля",mainForm);
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 form1.setSize(410, 300);
                 
             }
         });       
-=======
-                AddForm form1 = new AddForm("Заполните поля", mainform, path);
-                form1.setVisible(true);
-                form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form1.setSize(310, 200);
-
+        //КНОПКА "УДАЛИТЬ ЗАДАНИЕ"
+        deleteTask.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                try {
+                    removeTask();
+                } catch (IOException ex) {
+                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
->>>>>>> origin/master
 
 
         //КНОПКА "ИЗМЕНИТЬ ЗАДАНИЕ"
         changeTask.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent event) {
-                String date =(String)textTable.getValueAt(textTable.getSelectedRow(), 3);
-                String[] strings = date.split("[ /,.-[:]]");
-
-<<<<<<< HEAD
+            public void actionPerformed(ActionEvent event) {             
             }
-        });                                  
-=======
-                GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]),Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
-                Task t = new Task((String)textTable.getValueAt(textTable.getSelectedRow(), 1), (String)textTable.getValueAt(textTable.getSelectedRow(), 2), gc, (String)textTable.getValueAt(textTable.getSelectedRow(), 4));
-
-
-                ChangeForm form1 = new ChangeForm("Измените поля", mainform, path, t);
-                form1.setVisible(true);
-                form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form1.setSize(310, 200);
-            }
+            
         });
-
-        //КНОПКА "УДАЛИТЬ ЗАДАНИЕ"
-        deleteTask.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                removeTask();
-            }
-        });
-
-//D:\Labs\NetCracker\TaskM
->>>>>>> origin/master
     }
 }
