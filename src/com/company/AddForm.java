@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.util.GregorianCalendar;
@@ -15,7 +16,18 @@ import java.util.logging.Logger;
  * Created by daryo on 18.11.2016.
  */
 public class AddForm extends JFrame {
-   
+    public boolean equalsTasks(String pathTask){
+        boolean flag=false;
+        File f = null;
+        File[] paths;
+        f = new File(MainForm.pathCatalog);
+        paths = f.listFiles();
+        for (File path : paths) {
+            String pathStr = path.toString();
+            if (!pathStr.equals(pathTask)) flag=true;
+        }
+        return flag;
+    }
     public AddForm(String nameForm, MainForm parentForm) {
         
         super(nameForm);
@@ -79,10 +91,14 @@ public class AddForm extends JFrame {
                     Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
 
                     TaskManager tm = new TaskManager();
-                    tm.addTaskToFile(t,MainForm.pathCatalog+"\\"+name.getText()+".txt");                               
-                    parentForm.outputTasks(MainForm.pathCatalog);                 
-                    int k = 0;              
-                    dispose();
+                    String pathTask=MainForm.pathCatalog+"\\"+name.getText()+".txt";
+                    if (equalsTasks(pathTask))
+                    {   tm.addTaskToFile(t,pathTask);                               
+                        parentForm.outputTasks(MainForm.pathCatalog); 
+                        int k = 0;              
+                        dispose();
+                    }
+                    else systemMessage.setText("<html>Данная задача уже существует</html>");                  
                 } catch (IOException e) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
                 } catch (ClassNotFoundException ex) {
