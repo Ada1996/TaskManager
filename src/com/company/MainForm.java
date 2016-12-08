@@ -138,11 +138,10 @@ public class MainForm extends JFrame {
                     StringBuilder sb = new StringBuilder(pathCatalog);
                     sb.append("\\" + textTable.getValueAt(textTable.getSelectedRow(), 0) + ".txt");
                     String fileName = sb.toString();
-                    //fileName = fileName.replace("\\", "/");
-                    System.out.println(fileName);
                     File delFile = new File(fileName);
                     System.gc();
                     delFile.delete();
+                    sb = new StringBuilder(pathCatalog);
                     outputTasks(pathCatalog);
                 } catch (IOException ex) {
                     Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
