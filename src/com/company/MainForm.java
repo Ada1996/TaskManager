@@ -35,12 +35,30 @@ public class MainForm extends JFrame {
     public void buildTable() {
         textTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         TableColumn column = null;
-        for (int i = 0; i < textTable.getColumnModel().getColumnCount(); i++) {
+       /* for (int i = 0; i < textTable.getColumnModel().getColumnCount(); i++) {
             column = textTable.getColumnModel().getColumn(i);
             String hv = column.getHeaderValue().toString();
             JTableHeader th = textTable.getTableHeader();
             FontMetrics fm = th.getFontMetrics(th.getFont());
             column.setPreferredWidth(fm.stringWidth(hv) + 25);
+        }*/
+       int prefWidth = 0;
+        JTableHeader th = textTable.getTableHeader();
+        for (int i = 0; i < textTable.getColumnCount(); i++) {
+            column = textTable.getColumnModel().getColumn(i);
+            int prefWidthMax = 0;
+            for (int j = 0; j <textTable.getRowCount(); j++) {
+                String s = textTable.getModel().getValueAt(j, i).toString();    
+                prefWidth = 
+                Math.round(
+                    (float) th.getFontMetrics(
+                        th.getFont()).getStringBounds(s,
+                        th.getGraphics()
+                    ).getWidth()
+                );
+                if ( prefWidth > prefWidthMax ) prefWidthMax = prefWidth;                              
+            }
+            column.setPreferredWidth(prefWidthMax + 68);
         }
     }
 
