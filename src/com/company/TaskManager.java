@@ -10,30 +10,30 @@ import java.util.List;
 
 public class TaskManager {
 
-    private List<Task> tasks = null;
+    private static List<Task> tasks = null;
 
-    public TaskManager(){
-        this.tasks = new ArrayList<>();
+   public  TaskManager(){
+        tasks = new ArrayList<>();
     }
 
-    public int getCountTasks(){
-        return this.tasks.size();
+    public static int getCountTasks(){
+        return tasks.size();
     }
 
-    public void add(Task task) {
+    public static void add(Task task) {
         if(task == null)
             throw new NullPointerException();
         else
-            this.tasks.add(task);
+            tasks.add(task);
     }
 
-    public void delete(Task task){
+    public static void delete(Task task){
         if(task != null){
-            this.tasks.remove(task);
+            tasks.remove(task);
         }
     }
 
-    public List<Task> getTasks() {
+    public static List<Task> getTasks() {
         return tasks;
     }
 
