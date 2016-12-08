@@ -20,6 +20,7 @@ public class ChangeForm extends JFrame {
 
         super(nameForm);
         setLayout(null);
+        String nameFile = cTask.getName();
         //                     КОМПОНЕНТЫ ФОРМЫ                     //
 
 
