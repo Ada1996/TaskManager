@@ -19,17 +19,6 @@ import javax.swing.table.TableColumn;
  */
 public class MainForm extends JFrame {
 
-<<<<<<< HEAD
-        public static String pathCatalog;
-        File catalog;
-        private TaskManager journ;    
-        private TaskTable tTable;
-        private JTable textTable;
-        private JScrollPane scroll;    
-        public MainForm mainform=this;
-    
-        public TaskManager getJourn(){
-=======
     public static String pathCatalog;
     File catalog;
     private TaskManager journ;
@@ -39,7 +28,6 @@ public class MainForm extends JFrame {
     public MainForm mainform = this;
 
     public TaskManager getJourn() {
->>>>>>> c2137e7154b027274947f9da3029d20f421c3e66
         return journ;
     }
 
@@ -55,47 +43,6 @@ public class MainForm extends JFrame {
             column.setPreferredWidth(fm.stringWidth(hv) + 25);
         }
     }
-<<<<<<< HEAD
-    public void removeTask() throws IOException, ClassNotFoundException
-    {
-        StringBuilder sb = new StringBuilder(pathCatalog);
-        sb.append("\\" + textTable.getValueAt(textTable.getSelectedRow(), 1) + ".txt");
-        String fileName = sb.toString();
-        //fileName = fileName.replace("\\", "/");
-        System.out.println(fileName);
-        File delFile = new File(fileName);
-        System.gc();
-        delFile.delete();
-        outputTasks(pathCatalog);
-    }
-    public void outputTasks(String pathCatalog) throws IOException, ClassNotFoundException{
-        journ=new TaskManager();
-        File f = null;
-        File[] paths;                 
-            f = new File(pathCatalog);       
-            paths = f.listFiles();        
-            for(File path:paths)  {   
-                String pathStr=path.toString();
-                if (pathStr.lastIndexOf("txt")==(pathStr.length()-3)){
-                   Task task = TaskManager.getTaskFromFile(pathStr);
-                   journ.add(task);
-                }
-            tTable.deleteTasks();
-            tTable.addTasks(journ);
-            textTable.updateUI();   
-            }
-   }
-    public MainForm mainForm=this;
-    public MainForm(String s) throws IOException, ClassNotFoundException {       
-        super(s);
-        //ПОЛУЧЕНИЕ ПУТИ К КОРНЕВОЙ ПАПКЕ ПРОЕКТА, СОЗДАНИЕ ПАПКИ TASKS
-        String pathRoot = System.getProperty("user.dir");
-        pathCatalog = pathRoot+"\\Tasks";
-        if(!new File(pathCatalog).exists()){
-            catalog = new File(pathCatalog);
-        }                
-        journ=new TaskManager();
-=======
 
     //ВЫВОД ВСЕХ ЗАДАЧ НА ЭКРАН
     public void outputTasks(String pathCatalog) throws IOException, ClassNotFoundException {
@@ -127,7 +74,6 @@ public class MainForm extends JFrame {
             catalog = new File(pathCatalog);
         }
         journ = new TaskManager();
->>>>>>> c2137e7154b027274947f9da3029d20f421c3e66
         tTable = new TaskTable();
         textTable = new JTable(tTable);
         setLayout(new BorderLayout());
@@ -149,16 +95,6 @@ public class MainForm extends JFrame {
 
         setJMenuBar(menuBar);
         scroll = new JScrollPane(textTable);
-<<<<<<< HEAD
-        scroll.setPreferredSize(new Dimension(400,400));
-        add(scroll,BorderLayout.WEST);
-        
-        
-        outputTasks(pathCatalog);
-        buildTable();               
-
-       
-=======
         scroll.setPreferredSize(new Dimension(400, 400));
         add(scroll, BorderLayout.WEST);
 
@@ -183,33 +119,10 @@ public class MainForm extends JFrame {
         add(l1);
 
 
->>>>>>> c2137e7154b027274947f9da3029d20f421c3e66
         //КНОПКА "НОВОЕ ЗАДАНИЕ"
         newTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-                AddForm form1 = new AddForm("Заполните поля",mainForm);
-                form1.setVisible(true);
-                form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form1.setSize(410, 300);
-                
-            }
-        });       
-        //КНОПКА "УДАЛИТЬ ЗАДАНИЕ"
-        deleteTask.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                try {
-                    removeTask();
-                } catch (IOException ex) {
-                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-=======
                 AddForm form1 = new AddForm("Заполните поля", mainForm);
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -222,14 +135,18 @@ public class MainForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 try {
-                    StringBuilder sb = new StringBuilder(pathCatalog);
-                    sb.append("\\" + textTable.getValueAt(textTable.getSelectedRow(), 0) + ".txt");
-                    String fileName = sb.toString();
-                    File delFile = new File(fileName);
-                    System.gc();
-                    delFile.delete();
-                    sb = new StringBuilder(pathCatalog);
+                    int[] selectedRows = textTable.getSelectedRows();
+                    for(int i = 0; i < selectedRows.length; i++) {
+                        StringBuilder sb = new StringBuilder(pathCatalog);
+                        int selIndex = selectedRows[i]; 
+                        sb.append("\\" + textTable.getValueAt(selIndex, 0) + ".txt");
+                        String fileName = sb.toString();
+                        File delFile = new File(fileName);
+                        System.gc();
+                        delFile.delete();
+                    }      
                     outputTasks(pathCatalog);
+                    textTable.getSelectionModel().clearSelection();
                 } catch (IOException ex) {
                     Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
@@ -237,15 +154,11 @@ public class MainForm extends JFrame {
                 }
             }
         });
->>>>>>> c2137e7154b027274947f9da3029d20f421c3e66
 
 
         //КНОПКА "ИЗМЕНИТЬ ЗАДАНИЕ"
         changeTask.addActionListener(new ActionListener() {
             @Override
-<<<<<<< HEAD
-            public void actionPerformed(ActionEvent event) {             
-=======
             public void actionPerformed(ActionEvent event) {
                 String date = (String) textTable.getValueAt(textTable.getSelectedRow(), 2);
                 String[] strings = date.split("[ /,.-[:]]");
@@ -270,9 +183,7 @@ public class MainForm extends JFrame {
                 form1.setSize(310, 200);
 
 
->>>>>>> c2137e7154b027274947f9da3029d20f421c3e66
             }
-            
         });
     }
 }

@@ -59,7 +59,7 @@ public class TaskTable extends AbstractTableModel{
         data.add(rowTable);
     }
     public void addTasks(TaskManager task){
-        List<Task> tasks = task.getTasks();
+        List<Task> tasks = TaskManager.getTasks();
         for(Task x : tasks){
         String []row = {
              x.getName(),
