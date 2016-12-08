@@ -136,17 +136,22 @@ public class MainForm extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 try {
                     int[] selectedRows = textTable.getSelectedRows();
-                    for(int i = 0; i < selectedRows.length; i++) {
-                        StringBuilder sb = new StringBuilder(pathCatalog);
-                        int selIndex = selectedRows[i]; 
-                        sb.append("\\" + textTable.getValueAt(selIndex, 0) + ".txt");
-                        String fileName = sb.toString();
-                        File delFile = new File(fileName);
-                        System.gc();
-                        delFile.delete();
-                    }      
-                    outputTasks(pathCatalog);
-                    textTable.getSelectionModel().clearSelection();
+                    if (selectedRows.length==0)
+                            JOptionPane.showMessageDialog(null, "   Выберите файл!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    else
+                    {
+                        for(int i = 0; i < selectedRows.length; i++) {
+                            StringBuilder sb = new StringBuilder(pathCatalog);
+                            int selIndex = selectedRows[i]; 
+                            sb.append("\\" + textTable.getValueAt(selIndex, 0) + ".txt");
+                            String fileName = sb.toString();
+                            File delFile = new File(fileName);
+                            System.gc();
+                            delFile.delete();
+                        }      
+                        outputTasks(pathCatalog);
+                        textTable.getSelectionModel().clearSelection();
+                    }
                 } catch (IOException ex) {
                     Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
