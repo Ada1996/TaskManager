@@ -16,18 +16,6 @@ import java.util.logging.Logger;
  * Created by daryo on 18.11.2016.
  */
 public class AddForm extends JFrame {
-    public boolean equalsTasks(String pathTask){
-        boolean flag=false;
-        File f = null;
-        File[] paths;
-        f = new File(MainForm.pathCatalog);
-        paths = f.listFiles();
-        for (File path : paths) {
-            String pathStr = path.toString();
-            if (!pathStr.equals(pathTask)) flag=true;
-        }
-        return flag;
-    }
     public AddForm(String nameForm, MainForm parentForm) {
         
         super(nameForm);
@@ -89,11 +77,10 @@ public class AddForm extends JFrame {
                     GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
                     Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
-
-                    TaskManager tm = new TaskManager();
                     String pathTask=MainForm.pathCatalog+"\\"+name.getText()+".txt";
-                    if (equalsTasks(pathTask))
-                    {   tm.addTaskToFile(t,pathTask);                               
+                    if (TaskManager.equalsTasks(pathTask,MainForm.pathCatalog))
+                    {   
+                        TaskManager.addTaskToFile(t,pathTask);                               
                         parentForm.outputTasks(MainForm.pathCatalog); 
                         int k = 0;              
                         dispose();

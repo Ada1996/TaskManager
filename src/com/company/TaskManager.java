@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.File;
 import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -48,6 +49,19 @@ public class TaskManager {
         ObjectInputStream oin = new ObjectInputStream(fis);
         Task ts = (Task) oin.readObject();
         return ts;
+    }
+    public static boolean equalsTasks(String pathTask, String pathCatalog){
+        boolean flag=false;
+        File f = null;
+        File[] paths;
+        f = new File(pathCatalog);
+        paths = f.listFiles();
+        for (File path : paths) {
+            String pathStr = path.toString();
+            if (!pathStr.equals(pathTask)) flag=true;
+            else flag=false;
+        }
+        return flag;
     }
      
 }

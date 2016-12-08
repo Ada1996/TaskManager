@@ -137,7 +137,7 @@ public class MainForm extends JFrame {
                 try {
                     int[] selectedRows = textTable.getSelectedRows();
                     if (selectedRows.length==0)
-                            JOptionPane.showMessageDialog(null, "   Выберите файл!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "      Выберите файл!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     else
                     {
                         for(int i = 0; i < selectedRows.length; i++) {
