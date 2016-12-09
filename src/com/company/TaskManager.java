@@ -50,6 +50,17 @@ public class TaskManager {
         Task ts = (Task) oin.readObject();
         return ts;
     }
+    public static void renameFile(String pathToFile, String newPathToFile)
+    {
+        java.io.File file = new java.io.File(pathToFile);
+        if (file.exists()) { // если файл существует, то переименовываем его
+            file.renameTo(new java.io.File(newPathToFile));
+            System.out.println(pathToFile);
+            System.out.println(newPathToFile);
+        } else {
+            System.out.println("File not found!");
+        }
+    }
     public static boolean equalsTasks(String pathTask, String pathCatalog){
         boolean flag=false;
         File f = null;

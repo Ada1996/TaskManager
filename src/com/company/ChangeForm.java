@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.util.GregorianCalendar;
@@ -20,7 +21,7 @@ public class ChangeForm extends JFrame {
 
         super(nameForm);
         setLayout(null);
-        String nameFile = cTask.getName();
+        String nameF = cTask.getName();
         //                     КОМПОНЕНТЫ ФОРМЫ                     //
 
 
@@ -74,26 +75,42 @@ public class ChangeForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 try {
+                    //формирование даты
                     String sb = new String(date.getText());
                     String[] strings = sb.split("[ /,.-[:]]");
                     GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
+                    //формирование нового таска
                     Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
 
+                    //запись таска в исходный файл
 
-                    TaskManager.addTaskToFile(t, name.getText()+".txt");
 
+
+
+
+                    TaskManager.addTaskToFile(t, MainForm.pathCatalog + "\\" + nameF + ".txt");
+                    TaskManager.renameFile(MainForm.pathCatalog + "\\" + nameF + ".txt", MainForm.pathCatalog + "\\" + name.getText()+".txt");
+
+
+
+                   /* TaskManager.addTaskToFile(t, MainForm.pathCatalog + "\\" + name.getText() + ".txt");
+                    File delFile = new File(MainForm.pathCatalog+"\\" + nameF + ".txt");
+                    System.gc();
+                    delFile.delete();*/
+
+                    //вывод на экран обновленного списка задач
+                    parentForm.outputTasks(MainForm.pathCatalog);
 
                     dispose();
                 } catch (IOException e) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
-                }
-                catch (DateTimeException e) {
+                } catch (DateTimeException e) {
                     systemMessage.setText("<html>Неправильно введена дата, повторите ввод</html>");
-                }
-                catch (ArrayIndexOutOfBoundsException e)
-                {
+                } catch (ArrayIndexOutOfBoundsException e) {
                     systemMessage.setText("<html>Неправильно введена дата, повторите ввод</html>");
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
                 }
             }
         });
