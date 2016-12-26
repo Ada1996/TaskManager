@@ -34,15 +34,8 @@ public class MainForm extends JFrame {
     //РАБОТА С ТАБЛИЦЕЙ
     public void buildTable() {
         textTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        TableColumn column = null;
-       /* for (int i = 0; i < textTable.getColumnModel().getColumnCount(); i++) {
-            column = textTable.getColumnModel().getColumn(i);
-            String hv = column.getHeaderValue().toString();
-            JTableHeader th = textTable.getTableHeader();
-            FontMetrics fm = th.getFontMetrics(th.getFont());
-            column.setPreferredWidth(fm.stringWidth(hv) + 25);
-        }*/
-       int prefWidth = 0;
+        TableColumn column = null;   
+        int prefWidth = 0;
         JTableHeader th = textTable.getTableHeader();
         for (int i = 0; i < textTable.getColumnCount(); i++) {
             column = textTable.getColumnModel().getColumn(i);

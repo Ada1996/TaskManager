@@ -66,7 +66,7 @@ public class TaskManager {
         }
     }
     public static boolean equalsTasks(String pathTask, String pathCatalog){
-        boolean flag=false;
+        boolean flag=true;
         File f = null;
         File[] paths;
         f = new File(pathCatalog);
