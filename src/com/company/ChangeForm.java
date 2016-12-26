@@ -85,14 +85,8 @@ public class ChangeForm extends JFrame {
 
                     //запись таска в исходный файл
 
-
-
-
-
                     TaskManager.addTaskToFile(t, MainForm.pathCatalog + "\\" + nameF + ".txt");
                     TaskManager.renameFile(MainForm.pathCatalog + "\\" + nameF + ".txt", MainForm.pathCatalog + "\\" + name.getText()+".txt");
-
-
 
                    /* TaskManager.addTaskToFile(t, MainForm.pathCatalog + "\\" + name.getText() + ".txt");
                     File delFile = new File(MainForm.pathCatalog+"\\" + nameF + ".txt");

@@ -42,12 +42,16 @@ public class TaskManager {
         FileOutputStream fos = new FileOutputStream(pathToFile);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(Task);
+        fos.close();
+        oos.close();
     }
 
     public static Task getTaskFromFile(String pathToFile) throws IOException, ClassNotFoundException{
         FileInputStream fis = new FileInputStream(pathToFile);
         ObjectInputStream oin = new ObjectInputStream(fis);
         Task ts = (Task) oin.readObject();
+        fis.close();
+        oin.close();
         return ts;
     }
     public static void renameFile(String pathToFile, String newPathToFile)
