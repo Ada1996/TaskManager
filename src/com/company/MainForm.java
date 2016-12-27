@@ -7,9 +7,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Timer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
@@ -78,6 +79,10 @@ public class MainForm extends JFrame {
 
     public MainForm(String s) throws IOException, ClassNotFoundException {
         super(s);
+
+
+
+
         //ПОЛУЧЕНИЕ ПУТИ К КОРНЕВОЙ ПАПКЕ ПРОЕКТА, СОЗДАНИЕ ПАПКИ TASKS
         String pathRoot = System.getProperty("user.dir");
         pathCatalog = pathRoot + "\\Tasks";
@@ -113,18 +118,7 @@ public class MainForm extends JFrame {
         outputTasks(pathCatalog);
         buildTable();
 
-        JLabel l1 = new JLabel("<html>Ты видел деву на скале<br>" +
-                "В одежде белой над волнами<br>" +
-                "Когда, бушуя в бурной мгле,<br>" +
-                "Играло море с берегами,<br>" +
-                "Когда луч молний озарял<br>" +
-                "Ее всечасно блеском алым<br>" +
-                "И ветер бился и летал<br>" +
-                "С ее летучим покрывалом?<br>" +
-                "Прекрасно море в бурной мгле<br>" +
-                "И небо в блесках без лазури;<br>" +
-                "Но верь мне: дева на скале<br>" +
-                "Прекрасней волн, небес и бури.</html>");
+        JLabel l1 = new JLabel("<html><br></html>");
         l1.setVerticalAlignment(JLabel.TOP);
         l1.setPreferredSize(new Dimension(100, 400));
         add(l1);
@@ -137,7 +131,7 @@ public class MainForm extends JFrame {
                 AddForm form1 = new AddForm("Заполните поля", mainForm);
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form1.setSize(310, 200);
+                form1.setSize(310, 300);
 
             }
         });
@@ -193,7 +187,7 @@ public class MainForm extends JFrame {
 
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form1.setSize(310, 200);
+                form1.setSize(310, 300);
 
 
             }

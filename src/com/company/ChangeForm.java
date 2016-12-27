@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.util.GregorianCalendar;
@@ -35,41 +34,43 @@ public class ChangeForm extends JFrame {
 
         //ОПИСАНИЕ
         JLabel ldescription = new JLabel("Описание:");
-        JTextField description = new JTextField(cTask.getDescriptionOfTask());
+        JTextArea description = new JTextArea(cTask.getDescriptionOfTask());
+        description.setLineWrap(true);
+        description.setWrapStyleWord(true);
         add(ldescription);
         add(description);
         ldescription.setBounds(0, 25, 100, 20);
-        description.setBounds(100, 25, 194, 20);
+        description.setBounds(100, 25, 194, 120);
 
         //КОНТАКТЫ
         JLabel lcontacts = new JLabel("Контакты:");
         JTextField contacts = new JTextField(cTask.getContacts());
         add(lcontacts);
         add(contacts);
-        lcontacts.setBounds(0, 50, 100, 20);
-        contacts.setBounds(100, 50, 194, 20);
+        lcontacts.setBounds(0, 150, 100, 20);
+        contacts.setBounds(100, 150, 194, 20);
 
         //ДАТА
-        JLabel ldate = new JLabel("Дата (ggg-mm-dd hh-mm):");
+        JLabel ldate = new JLabel("Дата (mm-dd-yyyy hh:mm):");
 
-        System.out.println(cTask.getDateOfMessage().toString());
+
         JTextField date = new JTextField(cTask.getDateOfMessage().toString());
         add(ldate);
         add(date);
-        ldate.setBounds(0, 75, 200, 20);
-        date.setBounds(152, 75, 142, 20);
+        ldate.setBounds(0, 175, 200, 20);
+        date.setBounds(152, 175, 142, 20);
 
 
         //СООБЩЕНИЯ ОБ ОШИБКАХ
         JLabel systemMessage = new JLabel("<html></html>");
         systemMessage.setForeground(Color.red);
         add(systemMessage);
-        systemMessage.setBounds(0, 100, 400, 20);
+        systemMessage.setBounds(0, 200, 400, 20);
 
         //КНОПКА ОК
         JButton ok = new JButton("OK");
         add(ok);
-        ok.setBounds(90, 135, 100, 20);
+        ok.setBounds(90, 235, 100, 20);
 
         ok.addActionListener(new ActionListener() {
             @Override
@@ -78,7 +79,7 @@ public class ChangeForm extends JFrame {
                     //формирование даты
                     String sb = new String(date.getText());
                     String[] strings = sb.split("[ /,.-[:]]");
-                    GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
+                    GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
                     //формирование нового таска
                     Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
@@ -87,11 +88,6 @@ public class ChangeForm extends JFrame {
 
                     TaskManager.addTaskToFile(t, MainForm.pathCatalog + "\\" + nameF + ".txt");
                     TaskManager.renameFile(MainForm.pathCatalog + "\\" + nameF + ".txt", MainForm.pathCatalog + "\\" + name.getText()+".txt");
-
-                   /* TaskManager.addTaskToFile(t, MainForm.pathCatalog + "\\" + name.getText() + ".txt");
-                    File delFile = new File(MainForm.pathCatalog+"\\" + nameF + ".txt");
-                    System.gc();
-                    delFile.delete();*/
 
                     //вывод на экран обновленного списка задач
                     parentForm.outputTasks(MainForm.pathCatalog);

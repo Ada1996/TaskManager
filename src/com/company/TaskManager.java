@@ -59,8 +59,6 @@ public class TaskManager {
         java.io.File file = new java.io.File(pathToFile);
         if (file.exists()) { // если файл существует, то переименовываем его
             file.renameTo(new java.io.File(newPathToFile));
-            System.out.println(pathToFile);
-            System.out.println(newPathToFile);
         } else {
             System.out.println("File not found!");
         }

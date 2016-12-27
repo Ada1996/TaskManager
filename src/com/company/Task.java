@@ -2,6 +2,7 @@ package com.company;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Task implements Serializable {
@@ -29,12 +30,21 @@ public class Task implements Serializable {
     }
 
     public String getDateOfMessage() {
-        StringBuffer str = new StringBuffer();
+        /*StringBuffer str = new StringBuffer();
         SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         f.setCalendar(this.dateOfMessage);
-        String dateFormatted = f.format(this.dateOfMessage.getTime());         
+        String dateFormatted = f.format(this.dateOfMessage.getTime());
         str.append(dateFormatted);
-        return str.toString();
+        return str.toString();*/
+
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+
+        Calendar calendar = this.dateOfMessage;
+        //calendar.add(Calendar.MONTH, -1);
+        String formattedDate = df.format(calendar.getTime());
+        //System.out.println(formattedDate);
+        return formattedDate;
+
     }
 
     public void setDateOfMessage(GregorianCalendar dateOfMessage) {

@@ -26,6 +26,20 @@ public class Main {
 
         System.out.println(journal.getCountTasks());*/
 
+
+        java.util.Timer mTimer;
+        MyTimerTask mMyTimerTask;
+
+        mTimer = new java.util.Timer();
+        mMyTimerTask = new MyTimerTask();
+        Ex ex = new Ex();
+
+
+        // delay 0ms, repeat in 5000ms
+        mTimer.schedule(mMyTimerTask, 0, 5000);
+
+
+
         MainForm form = new MainForm("Task Manager");
         form.setVisible(true);
         form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

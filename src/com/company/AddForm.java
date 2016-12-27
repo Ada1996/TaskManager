@@ -33,48 +33,58 @@ public class AddForm extends JFrame {
 
         //ОПИСАНИЕ
         JLabel ldescription = new JLabel("Описание:");
-        JTextField description = new JTextField("");
+        JTextArea description = new JTextArea("");
+        description.setLineWrap(true);
+        description.setWrapStyleWord(true);
         add(ldescription);
         add(description);
         ldescription.setBounds(0, 25, 100, 20);
-        description.setBounds(100, 25, 194, 20);
+        description.setBounds(100, 25, 194, 120);
 
         //КОНТАКТЫ
         JLabel lcontacts = new JLabel("Контакты:");
         JTextField contacts = new JTextField("");
         add(lcontacts);
         add(contacts);
-        lcontacts.setBounds(0, 50, 100, 20);
-        contacts.setBounds(100, 50, 194, 20);
+        lcontacts.setBounds(0, 150, 100, 20);
+        contacts.setBounds(100, 150, 194, 20);
 
         //ДАТА
-        JLabel ldate = new JLabel("Дата (ggg-mm-dd hh-mm):");
+        JLabel ldate = new JLabel("Дата (mm-dd-yyyy hh:mm):");
         JTextField date = new JTextField();
         add(ldate);
         add(date);
-        ldate.setBounds(0, 75, 200, 20);
-        date.setBounds(152, 75, 142, 20);
+        ldate.setBounds(0, 175, 200, 20);
+        date.setBounds(152, 175, 142, 20);
 
 
         //СООБЩЕНИЯ ОБ ОШИБКАХ
-        JLabel systemMessage = new JLabel("<html>Здесь будут выводиться сообщения об ошибках</html>");
+        JLabel systemMessage = new JLabel("<html></html>");
         systemMessage.setForeground(Color.red);
         add(systemMessage);
-        systemMessage.setBounds(0, 100, 400, 20);
+        systemMessage.setBounds(0, 200, 400, 20);
 
         //КНОПКА ОК
         JButton ok = new JButton("OK");
         add(ok);
-        ok.setBounds(90, 135, 100, 20);
+        ok.setBounds(90, 235, 100, 20);
 
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 try {
-                    String sb = new String(date.getText());
-                    String[] strings = sb.split("[ ,.-]");
+                    System.out.println("ЛИНИЯ");
 
-                    GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
+                    String sb = new String(date.getText());
+                    //String[] strings = sb.split("[ ,.-]");
+                    String[] strings = sb.split("[ /,.-[:]]");
+                    /*for(int i=0; i<5;i++)
+                    {
+                        System.out.println(strings[i]);
+                    }*/
+
+                    GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
+
 
                     Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
                     String pathTask=MainForm.pathCatalog+"\\"+name.getText()+".txt";
@@ -85,7 +95,7 @@ public class AddForm extends JFrame {
                         int k = 0;              
                         dispose();
                     }
-                    else systemMessage.setText("<html>Данная задача уже существует</html>");                  
+                    else systemMessage.setText("<html>Данная задача уже существует</html>");
                 } catch (IOException e) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
                 } catch (ClassNotFoundException ex) {

@@ -60,14 +60,14 @@ public class TaskTable extends AbstractTableModel{
     }
     public void addTasks(TaskManager task){
         List<Task> tasks = TaskManager.getTasks();
-        for(Task x : tasks){
-        String []row = {
-             x.getName(),
-             x.getDescriptionOfTask(),
-             x.getDateOfMessage(),
-             x.getContacts(),
-        };
-         addData(row);
+        for(Task x : tasks) {
+            String[] row = {
+                    x.getName(),
+                    x.getDescriptionOfTask(),
+                    x.getDateOfMessage(),
+                    x.getContacts(),
+            };
+            addData(row);
         }
     }
     public void deleteTasks (){
