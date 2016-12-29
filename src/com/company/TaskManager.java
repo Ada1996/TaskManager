@@ -37,6 +37,28 @@ public class TaskManager {
     public static List<Task> getTasks()  {
         return tasks;
     }
+    
+    public static List<Task> getTasksFromFiles(String pathCatalog) {
+        File f = null;
+        File[] paths;
+        f = new File(pathCatalog);
+        paths = f.listFiles();
+        for (File path : paths) {
+            String pathStr = path.toString();
+            if (pathStr.lastIndexOf("txt") == (pathStr.length() - 3)) {
+                Task task = null;
+                try {
+                    task = TaskManager.getTaskFromFile(pathStr);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                tasks.add(task);
+            }          
+        }
+        return tasks; 
+    }
 
     public static void addTaskToFile(Task Task, String pathToFile) throws IOException {
         FileOutputStream fos = new FileOutputStream(pathToFile);

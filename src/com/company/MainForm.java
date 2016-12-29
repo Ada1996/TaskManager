@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.Timer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
+import java.util.List;
+ 
 
 
 /**
@@ -58,7 +60,7 @@ public class MainForm extends JFrame {
 
     //ВЫВОД ВСЕХ ЗАДАЧ НА ЭКРАН
     public void outputTasks(String pathCatalog) throws IOException, ClassNotFoundException {
-        journ = new TaskManager();
+        journ = new TaskManager();       
         File f = null;
         File[] paths;
         f = new File(pathCatalog);
@@ -69,6 +71,8 @@ public class MainForm extends JFrame {
                 Task task = TaskManager.getTaskFromFile(pathStr);
                 journ.add(task);
             }
+//        List<Task> tasks;
+//        tasks = TaskManager.getTasksFromFiles(pathCatalog);          
             tTable.deleteTasks();
             tTable.addTasks(journ);
             textTable.updateUI();
@@ -79,8 +83,6 @@ public class MainForm extends JFrame {
 
     public MainForm(String s) throws IOException, ClassNotFoundException {
         super(s);
-
-
 
 
         //ПОЛУЧЕНИЕ ПУТИ К КОРНЕВОЙ ПАПКЕ ПРОЕКТА, СОЗДАНИЕ ПАПКИ TASKS
@@ -122,8 +124,15 @@ public class MainForm extends JFrame {
         l1.setVerticalAlignment(JLabel.TOP);
         l1.setPreferredSize(new Dimension(100, 400));
         add(l1);
+        
+        java.util.Timer mTimer; 
+        MyTimerTask mMyTimerTask; 
 
-
+        mTimer = new java.util.Timer(); 
+        mMyTimerTask = new MyTimerTask(); 
+        // delay 0ms, repeat in 5000ms 
+        mTimer.schedule(mMyTimerTask, 0, 5000);       
+        
         //КНОПКА "НОВОЕ ЗАДАНИЕ"
         newTask.addActionListener(new ActionListener() {
             @Override
