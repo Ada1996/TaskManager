@@ -42,7 +42,7 @@ public class Task implements Serializable {
         Calendar calendar = this.dateOfMessage;
         //calendar.add(Calendar.MONTH, -1);
         String formattedDate = df.format(calendar.getTime());
-        //System.out.println(formattedDate);
+        System.out.println(formattedDate);
         return formattedDate;
 
     }

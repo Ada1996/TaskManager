@@ -13,28 +13,28 @@ public class TaskManager {
 
     private static List<Task> tasks = null;
 
-   public  TaskManager(){
+    public TaskManager() {
         tasks = new ArrayList<>();
     }
 
-    public static int getCountTasks(){
+    public static int getCountTasks() {
         return tasks.size();
     }
 
     public static void add(Task task) {
-        if(task == null)
+        if (task == null)
             throw new NullPointerException();
         else
             tasks.add(task);
     }
 
-    public static void delete(Task task){
-        if(task != null){
+    public static void delete(Task task) {
+        if (task != null) {
             tasks.remove(task);
         }
     }
 
-    public static List<Task> getTasks() {
+    public static List<Task> getTasks()  {
         return tasks;
     }
 
@@ -46,7 +46,7 @@ public class TaskManager {
         oos.close();
     }
 
-    public static Task getTaskFromFile(String pathToFile) throws IOException, ClassNotFoundException{
+    public static Task getTaskFromFile(String pathToFile) throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream(pathToFile);
         ObjectInputStream oin = new ObjectInputStream(fis);
         Task ts = (Task) oin.readObject();
@@ -54,8 +54,8 @@ public class TaskManager {
         oin.close();
         return ts;
     }
-    public static void renameFile(String pathToFile, String newPathToFile)
-    {
+
+    public static void renameFile(String pathToFile, String newPathToFile) {
         java.io.File file = new java.io.File(pathToFile);
         if (file.exists()) { // если файл существует, то переименовываем его
             file.renameTo(new java.io.File(newPathToFile));
@@ -63,18 +63,19 @@ public class TaskManager {
             System.out.println("File not found!");
         }
     }
-    public static boolean equalsTasks(String pathTask, String pathCatalog){
-        boolean flag=true;
+
+    public static boolean equalsTasks(String pathTask, String pathCatalog) {
+        boolean flag = true;
         File f = null;
         File[] paths;
         f = new File(pathCatalog);
         paths = f.listFiles();
         for (File path : paths) {
             String pathStr = path.toString();
-            if (!pathStr.equals(pathTask)) flag=true;
-            else flag=false;
+            if (!pathStr.equals(pathTask)) flag = true;
+            else flag = false;
         }
         return flag;
     }
-     
+
 }
