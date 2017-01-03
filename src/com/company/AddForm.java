@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class AddForm extends JFrame {
     public AddForm(String nameForm, MainForm parentForm) {
-        
+
         super(nameForm);
         setLayout(null);
         //                     КОМПОНЕНТЫ ФОРМЫ                     //
@@ -58,55 +58,45 @@ public class AddForm extends JFrame {
         date.setBounds(152, 175, 142, 20);
 
 
-        //СООБЩЕНИЯ ОБ ОШИБКАХ
-        JLabel systemMessage = new JLabel("<html></html>");
-        systemMessage.setForeground(Color.red);
-        add(systemMessage);
-        systemMessage.setBounds(0, 200, 400, 20);
-
         //КНОПКА ОК
         JButton ok = new JButton("OK");
         add(ok);
-        ok.setBounds(90, 235, 100, 20);
+        ok.setBounds(90, 200, 100, 20);
 
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 try {
-                    System.out.println("ЛИНИЯ");
 
-                    String sb = new String(date.getText());
-                    //String[] strings = sb.split("[ ,.-]");
-                    String[] strings = sb.split("[ /,.-[:]]");
-                    /*for(int i=0; i<5;i++)
-                    {
-                        System.out.println(strings[i]);
-                    }*/
+                    String nameTask = name.getText();
+                    char[] nameCharTask = nameTask.toCharArray();
+                    if ((!name.getText().equals("")) && (nameCharTask[0] != ' ')) {
 
-                    GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
+                        String sb = new String(date.getText());
+                        String[] strings = sb.split("[ /,.-[:]]");
 
+                        GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
-                    Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
-                    String pathTask=MainForm.pathCatalog+"\\"+name.getText()+".txt";
-                    if (TaskManager.equalsTasks(pathTask,MainForm.pathCatalog))
-                    {   
-                        TaskManager.addTaskToFile(t,pathTask);                               
-                        parentForm.outputTasks(MainForm.pathCatalog); 
-                        int k = 0;              
-                        dispose();
-                    }
-                    else systemMessage.setText("<html>Данная задача уже существует</html>");
+                        Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
+                        String pathTask = MainForm.pathCatalog + "\\" + name.getText() + ".txt";
+                        if (TaskManager.equalsTasks(pathTask, MainForm.pathCatalog)) {
+                            TaskManager.addTaskToFile(t, pathTask);
+                            parentForm.outputTasks(MainForm.pathCatalog);
+                            int k = 0;
+                            dispose();
+                        } else
+                            JOptionPane.showMessageDialog(null, "Данная задача уже существует", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    } else
+                        JOptionPane.showMessageDialog(null, "Имя задания не должно быть пустым и начинаться с пробела", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 } catch (IOException e) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(AddForm.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                catch (DateTimeException e) {
-                    systemMessage.setText("<html>Неправильно введена дата, повторите ввод</html>");
-                }
-                catch (ArrayIndexOutOfBoundsException e)
-                {
-                    systemMessage.setText("<html>Неправильно введена дата, повторите ввод</html>");
+                } catch (DateTimeException e) {
+                    JOptionPane.showMessageDialog(null, "Неправильно введена дата, повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
+
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    JOptionPane.showMessageDialog(null, "Неправильно введена дата, повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
