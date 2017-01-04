@@ -37,22 +37,22 @@ public class MainForm extends JFrame {
     //РАБОТА С ТАБЛИЦЕЙ
     public void buildTable() {
         textTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        TableColumn column = null;   
+        TableColumn column = null;
         int prefWidth = 0;
         JTableHeader th = textTable.getTableHeader();
         for (int i = 0; i < textTable.getColumnCount(); i++) {
             column = textTable.getColumnModel().getColumn(i);
             int prefWidthMax = 0;
-            for (int j = 0; j <textTable.getRowCount(); j++) {
-                String s = textTable.getModel().getValueAt(j, i).toString();    
-                prefWidth = 
-                Math.round(
-                    (float) th.getFontMetrics(
-                        th.getFont()).getStringBounds(s,
-                        th.getGraphics()
-                    ).getWidth()
-                );
-                if ( prefWidth > prefWidthMax ) prefWidthMax = prefWidth;                              
+            for (int j = 0; j < textTable.getRowCount(); j++) {
+                String s = textTable.getModel().getValueAt(j, i).toString();
+                prefWidth =
+                        Math.round(
+                                (float) th.getFontMetrics(
+                                        th.getFont()).getStringBounds(s,
+                                        th.getGraphics()
+                                ).getWidth()
+                        );
+                if (prefWidth > prefWidthMax) prefWidthMax = prefWidth;
             }
             column.setPreferredWidth(prefWidthMax + 68);
         }
@@ -140,7 +140,7 @@ public class MainForm extends JFrame {
                 AddForm form1 = new AddForm("Заполните поля", mainForm);
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form1.setSize(310, 300);
+                form1.setSize(310, 265);
 
             }
         });
@@ -150,19 +150,18 @@ public class MainForm extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 try {
                     int[] selectedRows = textTable.getSelectedRows();
-                    if (selectedRows.length==0)
-                            JOptionPane.showMessageDialog(null, "      Выберите файл!", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                    else
-                    {
-                        for(int i = 0; i < selectedRows.length; i++) {
+                    if (selectedRows.length == 0)
+                        JOptionPane.showMessageDialog(null, "      Выберите файл!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    else {
+                        for (int i = 0; i < selectedRows.length; i++) {
                             StringBuilder sb = new StringBuilder(pathCatalog);
-                            int selIndex = selectedRows[i]; 
+                            int selIndex = selectedRows[i];
                             sb.append("\\" + textTable.getValueAt(selIndex, 0) + ".txt");
                             String fileName = sb.toString();
                             File delFile = new File(fileName);
                             System.gc();
                             delFile.delete();
-                        }      
+                        }
                         outputTasks(pathCatalog);
                         textTable.getSelectionModel().clearSelection();
                     }
@@ -179,25 +178,31 @@ public class MainForm extends JFrame {
         changeTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                String date = (String) textTable.getValueAt(textTable.getSelectedRow(), 2);
-                String[] strings = date.split("[ /,.-[:]]");
-                GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
+                int[] selectedRows = textTable.getSelectedRows();
+                if (selectedRows.length == 0)
+                    JOptionPane.showMessageDialog(null, "      Выберите файл!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                else if (selectedRows.length > 1) {
+                    JOptionPane.showMessageDialog(null, "Выберите только один файл!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    String date = (String) textTable.getValueAt(textTable.getSelectedRow(), 2);
+                    String[] strings = date.split("[ /,.-[:]]");
+                    GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
-                StringBuffer str = new StringBuffer();
-                SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-                f.setCalendar(gc);
-                String dateFormatted = f.format(gc.getTime());
-                str.append(dateFormatted);
+                    StringBuffer str = new StringBuffer();
+                    SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                    f.setCalendar(gc);
+                    String dateFormatted = f.format(gc.getTime());
+                    str.append(dateFormatted);
 
 
-                Task t = new Task((String) textTable.getValueAt(textTable.getSelectedRow(), 0), (String) textTable.getValueAt(textTable.getSelectedRow(), 1), gc, (String) textTable.getValueAt(textTable.getSelectedRow(), 3));
+                    Task t = new Task((String) textTable.getValueAt(textTable.getSelectedRow(), 0), (String) textTable.getValueAt(textTable.getSelectedRow(), 1), gc, (String) textTable.getValueAt(textTable.getSelectedRow(), 3));
 
-                ChangeForm form1 = new ChangeForm("Измените поля", mainForm, t);
+                    ChangeForm form1 = new ChangeForm("Измените поля", mainForm, t);
 
-                form1.setVisible(true);
-                form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form1.setSize(310, 300);
-
+                    form1.setVisible(true);
+                    form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    form1.setSize(310, 265);
+                }
 
             }
         });

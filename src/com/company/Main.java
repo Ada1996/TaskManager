@@ -27,15 +27,15 @@ public class Main {
         System.out.println(journal.getCountTasks());*/
 
 
-//        java.util.Timer mTimer;
-//        MyTimerTask mMyTimerTask;
-//
-//        mTimer = new java.util.Timer();
-//        mMyTimerTask = new MyTimerTask();
-//
-//
-//        // delay 0ms, repeat in 5000ms
-//        mTimer.schedule(mMyTimerTask, 0, 5000);
+        java.util.Timer mTimer;
+        MyTimerTask mMyTimerTask;
+
+        mTimer = new java.util.Timer();
+        mMyTimerTask = new MyTimerTask();
+
+
+        // delay 0ms, repeat in 5000ms
+        mTimer.schedule(mMyTimerTask, 0, 5000);
 
 
 
