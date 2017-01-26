@@ -78,8 +78,10 @@ public class ChangeForm extends JFrame {
                             //формирование даты
                             String sb = new String(date.getText());
                             String[] strings = sb.split("[ /,.-[:]]");
-                            GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
+                            strings[0]=(Integer.parseInt(strings[0])-1)+"";
+
+                            GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]),Integer.parseInt(strings[0]) , Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
                             //формирование нового таска
                             Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
 

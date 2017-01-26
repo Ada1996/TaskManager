@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TaskManager {
 
-    private static List<Task> tasks = null;
+    private static List<Task>  tasks= null;
 
     public TaskManager() {
         tasks = new ArrayList<>();
@@ -39,10 +39,9 @@ public class TaskManager {
     }
     
     public static List<Task> getTasksFromFiles(String pathCatalog) {
-        File f = null;
-        File[] paths;
-        f = new File(pathCatalog);
-        paths = f.listFiles();
+        File f = new File(pathCatalog);
+        File[] paths = f.listFiles();
+        tasks.clear();
         for (File path : paths) {
             String pathStr = path.toString();
             if (pathStr.lastIndexOf("txt") == (pathStr.length() - 3)) {

@@ -74,6 +74,7 @@ public class AddForm extends JFrame {
 
                         String sb = new String(date.getText());
                         String[] strings = sb.split("[ /,.-[:]]");
+                        strings[0]=(Integer.parseInt(strings[0])-1)+"";
 
                         GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 

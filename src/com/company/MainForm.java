@@ -70,9 +70,7 @@ public class MainForm extends JFrame {
             if (pathStr.lastIndexOf("txt") == (pathStr.length() - 3)) {
                 Task task = TaskManager.getTaskFromFile(pathStr);
                 journ.add(task);
-            }
-//        List<Task> tasks;
-//        tasks = TaskManager.getTasksFromFiles(pathCatalog);          
+            }        
             tTable.deleteTasks();
             tTable.addTasks(journ);
             textTable.updateUI();
@@ -130,8 +128,8 @@ public class MainForm extends JFrame {
 
         mTimer = new java.util.Timer(); 
         mMyTimerTask = new MyTimerTask(); 
-        // delay 0ms, repeat in 5000ms 
-        mTimer.schedule(mMyTimerTask, 0, 5000);       
+        // start MyTimerTask thread
+        mTimer.schedule(mMyTimerTask, 0);
         
         //КНОПКА "НОВОЕ ЗАДАНИЕ"
         newTask.addActionListener(new ActionListener() {
@@ -186,6 +184,9 @@ public class MainForm extends JFrame {
                 } else {
                     String date = (String) textTable.getValueAt(textTable.getSelectedRow(), 2);
                     String[] strings = date.split("[ /,.-[:]]");
+
+                    strings[0]=(Integer.parseInt(strings[0])-1)+"";
+
                     GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
                     StringBuffer str = new StringBuffer();
