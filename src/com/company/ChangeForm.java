@@ -1,7 +1,6 @@
 package com.company;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -34,7 +33,7 @@ public class ChangeForm extends JFrame {
 
         //ОПИСАНИЕ
         JLabel ldescription = new JLabel("Описание:");
-        JTextArea description = new JTextArea(cTask.getDescriptionOfTask());
+        JTextArea description = new JTextArea(cTask.getDescription());
         description.setLineWrap(true);
         description.setWrapStyleWord(true);
         add(ldescription);
@@ -54,7 +53,7 @@ public class ChangeForm extends JFrame {
         JLabel ldate = new JLabel("Дата (mm-dd-yyyy hh:mm):");
 
 
-        JTextField date = new JTextField(cTask.getDateOfMessage().toString());
+        JTextField date = new JTextField(cTask.getDate().toString());
         add(ldate);
         add(date);
         ldate.setBounds(0, 175, 200, 20);

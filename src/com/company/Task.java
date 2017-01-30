@@ -8,8 +8,8 @@ import java.util.GregorianCalendar;
 public class Task implements Serializable {
 
     private String name;
-    private String descriptionOfTask;
-    private GregorianCalendar dateOfMessage;
+    private String description;
+    private GregorianCalendar date;
     private String contacts;
 
 
@@ -21,24 +21,24 @@ public class Task implements Serializable {
         this.name = nameOfTask;
     }
 
-    public String getDescriptionOfTask() {
-        return descriptionOfTask;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptionOfTask(String descriptionOfTask) {
-        this.descriptionOfTask = descriptionOfTask;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getDateOfMessage() {     
+    public String getDate() {
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-        Calendar calendar = this.dateOfMessage;      
+        Calendar calendar = this.date;
         String formattedDate = df.format(calendar.getTime());
         return formattedDate;
 
     }
 
-    public void setDateOfMessage(GregorianCalendar dateOfMessage) {
-        this.dateOfMessage = dateOfMessage;
+    public void setDate(GregorianCalendar date) {
+        this.date = date;
     }
 
     public String getContacts() {
@@ -53,14 +53,14 @@ public class Task implements Serializable {
     public Task(String name, GregorianCalendar time, String contacts) {
         this.name = name;
         this.contacts = contacts;
-        this.descriptionOfTask = "";
-        this.dateOfMessage = time;
+        this.description = "";
+        this.date = time;
     }
 
     public Task(String name, String description, GregorianCalendar time, String contacts) {
         this.name = name;
         this.contacts = contacts;
-        this.descriptionOfTask = description;
-        this.dateOfMessage = time;
+        this.description = description;
+        this.date = time;
     }   
 }

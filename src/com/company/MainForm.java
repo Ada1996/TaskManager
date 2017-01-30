@@ -28,7 +28,7 @@ public class MainForm extends JFrame {
     private TaskTable tTable;
     private JTable textTable;
     private JScrollPane scroll;
-    public MainForm mainform = this;
+    public MainForm mainForm = this;
 
     public TaskManager getJourn() {
         return journ;
@@ -77,7 +77,7 @@ public class MainForm extends JFrame {
         }
     }
 
-    public MainForm mainForm = this;
+
 
     public MainForm(String s) throws IOException, ClassNotFoundException {
         super(s);
@@ -92,6 +92,8 @@ public class MainForm extends JFrame {
         journ = new TaskManager();
         tTable = new TaskTable();
         textTable = new JTable(tTable);
+
+        //setLayout(null);
         setLayout(new BorderLayout());
 
 
@@ -102,12 +104,12 @@ public class MainForm extends JFrame {
         JButton newTask = new JButton("Новое Задание");
         JButton changeTask = new JButton("Изменить задание");
         JButton deleteTask = new JButton("Удалить задание");
-        JLabel whatsUp = new JLabel("Системные сообщения:");
+        //JLabel whatsUp = new JLabel("Системные сообщения:");
 
         menuBar.add(newTask);
         menuBar.add(changeTask);
         menuBar.add(deleteTask);
-        menuBar.add(whatsUp);
+        //menuBar.add(whatsUp);
 
         setJMenuBar(menuBar);
         scroll = new JScrollPane(textTable);
@@ -118,10 +120,10 @@ public class MainForm extends JFrame {
         outputTasks(pathCatalog);
         buildTable();
 
-        JLabel l1 = new JLabel("<html><br></html>");
+        /*JLabel l1 = new JLabel("<html><br></html>");
         l1.setVerticalAlignment(JLabel.TOP);
         l1.setPreferredSize(new Dimension(100, 400));
-        add(l1);
+        add(l1);*/
         
         java.util.Timer mTimer; 
         MyTimerTask mMyTimerTask; 
@@ -139,6 +141,8 @@ public class MainForm extends JFrame {
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 form1.setSize(310, 265);
+                form1.setLocationRelativeTo(null);
+
 
             }
         });
@@ -203,6 +207,8 @@ public class MainForm extends JFrame {
                     form1.setVisible(true);
                     form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     form1.setSize(310, 265);
+                    form1.setLocationRelativeTo(null);
+
                 }
 
             }
