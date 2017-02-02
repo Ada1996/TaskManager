@@ -17,9 +17,9 @@ public class MyTimerTask extends TimerTask {
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             String formattedDate = df.format(calendar.getTime());
-
+       
             List<Task> tasks = TaskManager.getTasksFromFiles(MainForm.pathCatalog);
-
+        
             for (Task x : tasks) {
                 if (x.getDate().equals(formattedDate)) {
                     Toolkit.getDefaultToolkit().beep();

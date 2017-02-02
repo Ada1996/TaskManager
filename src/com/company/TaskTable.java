@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Настя
  */
 public class TaskTable extends AbstractTableModel{
-    private int column=4;
+    private int column=5;
     private ArrayList<String []> data;
     DefaultTableModel model = new DefaultTableModel();
     public TaskTable() {
@@ -46,10 +46,11 @@ public class TaskTable extends AbstractTableModel{
    @Override
     public String getColumnName(int columnIndex){
         switch(columnIndex){
-            case 0: return "Название";
-            case 1: return "Описание";
-            case 2: return "Дата";
-            case 3: return "Контакты";
+            case 0: return "Клиент";
+            case 1: return "Название";
+            case 2: return "Описание";
+            case 3: return "Дата";
+            case 4: return "Контакты";
         }
         return "";
     }   
@@ -62,6 +63,7 @@ public class TaskTable extends AbstractTableModel{
         List<Task> tasks = TaskManager.getTasks();
         for(Task x : tasks) {
             String[] row = {
+                    x.getClient(),
                     x.getName(),
                     x.getDescription(),
                     x.getDate(),

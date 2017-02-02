@@ -22,14 +22,22 @@ public class AddForm extends JFrame {
         setLayout(null);
         //                     КОМПОНЕНТЫ ФОРМЫ                     //
 
+       
+       //Клиент
+       JLabel lclient = new JLabel("Клиент:");
+        JTextField client = new JTextField("");
+        add(lclient);
+        add(client);
+        lclient.setBounds(0, 0, 100, 20);
+        client.setBounds(100, 0, 194, 20);
 
         //ИМЯ ЗАДАНИЯ
         JLabel lname = new JLabel("Имя задания:");
         JTextField name = new JTextField("");
         add(lname);
         add(name);
-        lname.setBounds(0, 0, 100, 20);
-        name.setBounds(100, 0, 194, 20);
+        lname.setBounds(0, 25, 100, 20);
+        name.setBounds(100, 25, 194, 20);
 
         //ОПИСАНИЕ
         JLabel ldescription = new JLabel("Описание:");
@@ -38,30 +46,30 @@ public class AddForm extends JFrame {
         description.setWrapStyleWord(true);
         add(ldescription);
         add(description);
-        ldescription.setBounds(0, 25, 100, 20);
-        description.setBounds(100, 25, 194, 120);
+        ldescription.setBounds(0, 50, 100, 20);
+        description.setBounds(100, 50, 194, 120);
 
         //КОНТАКТЫ
         JLabel lcontacts = new JLabel("Контакты:");
         JTextField contacts = new JTextField("");
         add(lcontacts);
         add(contacts);
-        lcontacts.setBounds(0, 150, 100, 20);
-        contacts.setBounds(100, 150, 194, 20);
+        lcontacts.setBounds(0, 175, 100, 20);
+        contacts.setBounds(100, 175, 194, 20);
 
         //ДАТА
         JLabel ldate = new JLabel("Дата (mm-dd-yyyy hh:mm):");
         JTextField date = new JTextField();
         add(ldate);
         add(date);
-        ldate.setBounds(0, 175, 200, 20);
-        date.setBounds(152, 175, 142, 20);
+        ldate.setBounds(0, 200, 200, 20);
+        date.setBounds(152, 200, 142, 20);
 
 
         //КНОПКА ОК
         JButton ok = new JButton("OK");
         add(ok);
-        ok.setBounds(90, 200, 100, 20);
+        ok.setBounds(90, 225, 100, 20);
 
         ok.addActionListener(new ActionListener() {
             @Override
@@ -78,7 +86,7 @@ public class AddForm extends JFrame {
 
                         GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
-                        Task t = new Task(name.getText(), description.getText(), gc, contacts.getText());
+                        Task t = new Task(lclient.getText(),name.getText(), description.getText(), gc, contacts.getText());
                         String pathTask = MainForm.pathCatalog + "\\" + name.getText() + ".txt";
                         if (TaskManager.equalsTasks(pathTask, MainForm.pathCatalog)) {
                             TaskManager.addTaskToFile(t, pathTask);

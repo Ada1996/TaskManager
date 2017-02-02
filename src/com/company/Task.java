@@ -11,10 +11,15 @@ public class Task implements Serializable {
     private String description;
     private GregorianCalendar date;
     private String contacts;
+    private String client;
 
 
     public String getName() {
         return name;
+    }
+    
+    public String getClient() {
+        return client;
     }
 
     public void setName(String nameOfTask) {
@@ -50,17 +55,19 @@ public class Task implements Serializable {
     }
 
 
-    public Task(String name, GregorianCalendar time, String contacts) {
+    public Task(String client, String name, GregorianCalendar time, String contacts) {
         this.name = name;
         this.contacts = contacts;
         this.description = "";
         this.date = time;
+        this.client = client;
     }
 
-    public Task(String name, String description, GregorianCalendar time, String contacts) {
+    public Task(String client,String name, String description, GregorianCalendar time, String contacts) {
         this.name = name;
         this.contacts = contacts;
         this.description = description;
         this.date = time;
+        this.client = client;
     }   
 }

@@ -113,7 +113,7 @@ public class MainForm extends JFrame {
 
         setJMenuBar(menuBar);
         scroll = new JScrollPane(textTable);
-        scroll.setPreferredSize(new Dimension(400, 400));
+        scroll.setPreferredSize(new Dimension(590, 400));
         add(scroll, BorderLayout.WEST);
 
 
@@ -140,7 +140,7 @@ public class MainForm extends JFrame {
                 AddForm form1 = new AddForm("Заполните поля", mainForm);
                 form1.setVisible(true);
                 form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form1.setSize(310, 265);
+                form1.setSize(320, 287);
                 form1.setLocationRelativeTo(null);
 
 
@@ -186,7 +186,7 @@ public class MainForm extends JFrame {
                 else if (selectedRows.length > 1) {
                     JOptionPane.showMessageDialog(null, "Выберите только один файл!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    String date = (String) textTable.getValueAt(textTable.getSelectedRow(), 2);
+                    String date = (String) textTable.getValueAt(textTable.getSelectedRow(), 3);
                     String[] strings = date.split("[ /,.-[:]]");
 
                     strings[0]=(Integer.parseInt(strings[0])-1)+"";
@@ -200,13 +200,13 @@ public class MainForm extends JFrame {
                     str.append(dateFormatted);
 
 
-                    Task t = new Task((String) textTable.getValueAt(textTable.getSelectedRow(), 0), (String) textTable.getValueAt(textTable.getSelectedRow(), 1), gc, (String) textTable.getValueAt(textTable.getSelectedRow(), 3));
+                    Task t = new Task((String) textTable.getValueAt(textTable.getSelectedRow(), 0),(String) textTable.getValueAt(textTable.getSelectedRow(), 1), (String) textTable.getValueAt(textTable.getSelectedRow(), 2), gc, (String) textTable.getValueAt(textTable.getSelectedRow(), 4));
 
                     ChangeForm form1 = new ChangeForm("Измените поля", mainForm, t);
 
                     form1.setVisible(true);
                     form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    form1.setSize(310, 265);
+                    form1.setSize(320, 287);
                     form1.setLocationRelativeTo(null);
 
                 }
