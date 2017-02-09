@@ -28,7 +28,6 @@ public class Client implements Runnable{
             String client = in.readUTF();
             System.out.println(client);
             List<Task> tasks = TaskManager.getTasksFromFiles(MainForm.pathCatalog);
-            System.out.println("получили: "+ tasks.get(0).getName());
             List<Task> tasksClient = new ArrayList<>(); 
             for (Task x : tasks) {
                 if (x.getClient().equals(client)) {
