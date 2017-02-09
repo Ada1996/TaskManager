@@ -6,6 +6,7 @@
 package com.company;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,14 +26,17 @@ public class Client implements Runnable{
             DataInputStream in = new DataInputStream(socket.getInputStream());
             
             String client = in.readUTF();
+            System.out.println(client);
             List<Task> tasks = TaskManager.getTasksFromFiles(MainForm.pathCatalog);
-            TaskManager tasksClient = new TaskManager(); 
+            System.out.println("получили: "+ tasks.get(0).getName());
+            List<Task> tasksClient = new ArrayList<>(); 
             for (Task x : tasks) {
                 if (x.getClient().equals(client)) {
                     tasksClient.add(x) ;
+                    System.out.println(x.getName());
                 }
-            }           
-            out.writeObject( tasksClient);   
+            }     
+            out.writeObject( tasksClient);              
             out.close();
             in.close();            
             socket.close();
