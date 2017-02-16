@@ -22,9 +22,9 @@ public class AddForm extends JFrame {
         setLayout(null);
         //                     КОМПОНЕНТЫ ФОРМЫ                     //
 
-       
-       //Клиент
-       JLabel lclient = new JLabel("Клиент:");
+
+        //Клиент
+        JLabel lclient = new JLabel("Клиент:");
         JTextField client = new JTextField("");
         add(lclient);
         add(client);
@@ -82,11 +82,11 @@ public class AddForm extends JFrame {
 
                         String sb = new String(date.getText());
                         String[] strings = sb.split("[ /,.-[:]]");
-                        strings[0]=(Integer.parseInt(strings[0])-1)+"";
+                        strings[0] = (Integer.parseInt(strings[0]) - 1) + "";
 
                         GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
-                        Task t = new Task(lclient.getText(),name.getText(), description.getText(), gc, contacts.getText());
+                        Task t = new Task(client.getText(), name.getText(), description.getText(), gc, contacts.getText());
                         String pathTask = MainForm.pathCatalog + "\\" + name.getText() + ".txt";
                         if (TaskManager.equalsTasks(pathTask, MainForm.pathCatalog)) {
                             TaskManager.addTaskToFile(t, pathTask);
@@ -105,6 +105,8 @@ public class AddForm extends JFrame {
                     JOptionPane.showMessageDialog(null, "Неправильно введена дата, повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
+                    JOptionPane.showMessageDialog(null, "Неправильно введена дата, повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Неправильно введена дата, повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 }
             }

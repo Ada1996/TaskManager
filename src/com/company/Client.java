@@ -4,42 +4,47 @@
  * and open the template in the editor.
  */
 package com.company;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Настя
  */
-public class Client implements Runnable{
+public class Client implements Runnable {
     private Socket socket;
-    
-    public Client(Socket s){
+
+    public Client(Socket s) {
         socket = s;
     }
-        
-    public void run(){ 
+
+    public void run() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
-            
+
             String client = in.readUTF();
             System.out.println(client);
             List<Task> tasks = TaskManager.getTasksFromFiles(MainForm.pathCatalog);
-            List<Task> tasksClient = new ArrayList<>(); 
+            List<Task> tasksClient = new ArrayList<>();
             for (Task x : tasks) {
                 if (x.getClient().equals(client)) {
-                    tasksClient.add(x) ;
+                    tasksClient.add(x);
                     System.out.println(x.getName());
                 }
-            }     
-            out.writeObject( tasksClient);              
+            }
+            if(tasksClient.isEmpty())
+            {
+                boolean a = true;
+                out.writeObject(a);
+            }
+            else out.writeObject(tasksClient);
             out.close();
-            in.close();            
+            in.close();
             socket.close();
+        } catch (IOException e) {
         }
-        catch (IOException e) {}       
     }
 }

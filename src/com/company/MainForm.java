@@ -104,34 +104,21 @@ public class MainForm extends JFrame {
         JButton newTask = new JButton("Новое Задание");
         JButton changeTask = new JButton("Изменить задание");
         JButton deleteTask = new JButton("Удалить задание");
-        //JLabel whatsUp = new JLabel("Системные сообщения:");
 
         menuBar.add(newTask);
         menuBar.add(changeTask);
         menuBar.add(deleteTask);
-        //menuBar.add(whatsUp);
 
         setJMenuBar(menuBar);
         scroll = new JScrollPane(textTable);
-        scroll.setPreferredSize(new Dimension(590, 400));
+        scroll.setPreferredSize(new Dimension(650, 400));
         add(scroll, BorderLayout.WEST);
 
 
         outputTasks(pathCatalog);
         buildTable();
 
-        /*JLabel l1 = new JLabel("<html><br></html>");
-        l1.setVerticalAlignment(JLabel.TOP);
-        l1.setPreferredSize(new Dimension(100, 400));
-        add(l1);*/
-        
-        java.util.Timer mTimer; 
-        MyTimerTask mMyTimerTask; 
 
-        mTimer = new java.util.Timer(); 
-        mMyTimerTask = new MyTimerTask(); 
-        // start MyTimerTask thread
-        mTimer.schedule(mMyTimerTask, 0);
         
         //КНОПКА "НОВОЕ ЗАДАНИЕ"
         newTask.addActionListener(new ActionListener() {

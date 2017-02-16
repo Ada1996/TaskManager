@@ -21,9 +21,9 @@ public class ChangeForm extends JFrame {
         setLayout(null);
         String nameF = cTask.getName();
         //                     КОМПОНЕНТЫ ФОРМЫ                     //
-        
+
         //КЛИЕНТ
-       JLabel lclient = new JLabel("Клиент:");
+        JLabel lclient = new JLabel("Клиент:");
         JTextField client = new JTextField(cTask.getClient());
         add(lclient);
         add(client);
@@ -78,29 +78,27 @@ public class ChangeForm extends JFrame {
                     char[] nameCharTask = nameTask.toCharArray();
                     if ((!name.getText().equals("")) && (nameCharTask[0] != ' ')) {
                         String pathTask = MainForm.pathCatalog + "\\" + name.getText() + ".txt";
-                        if (TaskManager.equalsTasks(pathTask, MainForm.pathCatalog)) {
-                            //формирование даты
-                            String sb = new String(date.getText());
-                            String[] strings = sb.split("[ /,.-[:]]");
 
-                            strings[0]=(Integer.parseInt(strings[0])-1)+"";
+                        //формирование даты
+                        String sb = new String(date.getText());
+                        String[] strings = sb.split("[ /,.-[:]]");
 
-                            GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]),Integer.parseInt(strings[0]) , Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
-                            //формирование нового таска
-                            Task t = new Task(client.getText(),name.getText(), description.getText(), gc, contacts.getText());
+                        strings[0] = (Integer.parseInt(strings[0]) - 1) + "";
 
-                            //запись таска в исходный файл
+                        GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
+                        //формирование нового таска
+                        Task t = new Task(client.getText(), name.getText(), description.getText(), gc, contacts.getText());
 
-                            TaskManager.addTaskToFile(t, MainForm.pathCatalog + "\\" + nameF + ".txt");
-                            TaskManager.renameFile(MainForm.pathCatalog + "\\" + nameF + ".txt", MainForm.pathCatalog + "\\" + name.getText() + ".txt");
+                        //запись таска в исходный файл
 
-                            //вывод на экран обновленного списка задач
-                            parentForm.outputTasks(MainForm.pathCatalog);
+                        TaskManager.addTaskToFile(t, MainForm.pathCatalog + "\\" + nameF + ".txt");
+                        TaskManager.renameFile(MainForm.pathCatalog + "\\" + nameF + ".txt", MainForm.pathCatalog + "\\" + name.getText() + ".txt");
 
-                            dispose();
-                        } else
-                            JOptionPane.showMessageDialog(null, "Данная задача уже существует", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                        //вывод на экран обновленного списка задач
+                        parentForm.outputTasks(MainForm.pathCatalog);
+
                         dispose();
+
                     } else
                         JOptionPane.showMessageDialog(null, "Имя задания не должно быть пустым и начинаться с пробела", "Ошибка", JOptionPane.ERROR_MESSAGE);
 
@@ -112,6 +110,8 @@ public class ChangeForm extends JFrame {
                     JOptionPane.showMessageDialog(null, "Неправильно введена дата, повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Неправильно введена дата, повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
