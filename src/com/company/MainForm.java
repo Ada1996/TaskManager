@@ -145,7 +145,7 @@ public class MainForm extends JFrame {
                         for (int i = 0; i < selectedRows.length; i++) {
                             StringBuilder sb = new StringBuilder(pathCatalog);
                             int selIndex = selectedRows[i];
-                            sb.append("\\" + textTable.getValueAt(selIndex, 0) + ".txt");
+                            sb.append("\\" + textTable.getValueAt(selIndex, 1) + ".txt");
                             String fileName = sb.toString();
                             File delFile = new File(fileName);
                             System.gc();
