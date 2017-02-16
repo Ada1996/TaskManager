@@ -35,12 +35,13 @@ public class Client implements Runnable {
                     System.out.println(x.getName());
                 }
             }
-            if(tasksClient.isEmpty())
-            {
-                boolean a = true;
-                out.writeObject(a);
-            }
-            else out.writeObject(tasksClient);
+//            if(tasksClient.isEmpty())
+//            {
+//                boolean a = true;
+//                out.writeObject(a);
+//            }
+//            else 
+out.writeObject(tasksClient);
             out.close();
             in.close();
             socket.close();
