@@ -57,7 +57,7 @@ public class ChangeForm extends JFrame {
         contacts.setBounds(100, 175, 194, 20);
 
         //ДАТА
-        JLabel ldate = new JLabel("Дата (mm-dd-yyyy hh:mm):");
+        JLabel ldate = new JLabel("Дата (mm/dd/yyyy hh:mm):");
         JTextField date = new JTextField(cTask.getDate());
         add(ldate);
         add(date);
