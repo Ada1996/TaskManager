@@ -85,8 +85,7 @@ public class AddForm extends JFrame {
                         strings[0]=(Integer.parseInt(strings[0])-1)+"";
 
                         GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
-
-                        Task t = new Task(lclient.getText(),name.getText(), description.getText(), gc, contacts.getText());
+                        Task t = new Task(client.getText(),name.getText(), description.getText(), gc, contacts.getText());
                         String pathTask = MainForm.pathCatalog + "\\" + name.getText() + ".txt";
                         if (TaskManager.equalsTasks(pathTask, MainForm.pathCatalog)) {
                             TaskManager.addTaskToFile(t, pathTask);
