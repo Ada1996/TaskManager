@@ -14,7 +14,6 @@ import javax.swing.Timer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import java.util.List;
- 
 
 
 /**
@@ -60,7 +59,7 @@ public class MainForm extends JFrame {
 
     //ВЫВОД ВСЕХ ЗАДАЧ НА ЭКРАН
     public void outputTasks(String pathCatalog) throws IOException, ClassNotFoundException {
-        journ = new TaskManager();       
+        journ = new TaskManager();
         File f = null;
         File[] paths;
         f = new File(pathCatalog);
@@ -70,13 +69,12 @@ public class MainForm extends JFrame {
             if (pathStr.lastIndexOf("txt") == (pathStr.length() - 3)) {
                 Task task = TaskManager.getTaskFromFile(pathStr);
                 journ.add(task);
-            }        
+            }
             tTable.deleteTasks();
             tTable.addTasks(journ);
             textTable.updateUI();
         }
     }
-
 
 
     public MainForm(String s) throws IOException, ClassNotFoundException {
@@ -104,10 +102,13 @@ public class MainForm extends JFrame {
         JButton newTask = new JButton("Новое Задание");
         JButton changeTask = new JButton("Изменить задание");
         JButton deleteTask = new JButton("Удалить задание");
+        JButton addClient = new JButton("Работа с клиентами");
+
 
         menuBar.add(newTask);
         menuBar.add(changeTask);
         menuBar.add(deleteTask);
+        menuBar.add(addClient);
 
         setJMenuBar(menuBar);
         scroll = new JScrollPane(textTable);
@@ -119,17 +120,21 @@ public class MainForm extends JFrame {
         buildTable();
 
 
-        
         //КНОПКА "НОВОЕ ЗАДАНИЕ"
         newTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddForm form1 = new AddForm("Заполните поля", mainForm);
-                form1.setVisible(true);
-                form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form1.setSize(320, 287);
-                form1.setLocationRelativeTo(null);
-
+                try {
+                    AddForm form1 = new AddForm("Заполните поля", mainForm);
+                    form1.setVisible(true);
+                    form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    form1.setSize(320, 287);
+                    form1.setLocationRelativeTo(null);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
 
             }
         });
@@ -145,14 +150,20 @@ public class MainForm extends JFrame {
                         for (int i = 0; i < selectedRows.length; i++) {
                             StringBuilder sb = new StringBuilder(pathCatalog);
                             int selIndex = selectedRows[i];
-                            sb.append("\\" + textTable.getValueAt(selIndex, 1) + ".txt");
+
+                            String dateF = ((String) textTable.getValueAt(selIndex, 3)).replace('/', '-');
+                            dateF = dateF.replace(':', '-');
+
+
+                            sb.append("\\" + textTable.getValueAt(selIndex, 1) + dateF + ".txt");
                             String fileName = sb.toString();
                             File delFile = new File(fileName);
                             System.gc();
                             delFile.delete();
+
                         }
-                        outputTasks(pathCatalog);
                         textTable.getSelectionModel().clearSelection();
+                        outputTasks(pathCatalog);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -176,7 +187,7 @@ public class MainForm extends JFrame {
                     String date = (String) textTable.getValueAt(textTable.getSelectedRow(), 3);
                     String[] strings = date.split("[ /,.-[:]]");
 
-                    strings[0]=(Integer.parseInt(strings[0])-1)+"";
+                    strings[0] = (Integer.parseInt(strings[0]) - 1) + "";
 
                     GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
 
@@ -187,16 +198,32 @@ public class MainForm extends JFrame {
                     str.append(dateFormatted);
 
 
-                    Task t = new Task((String) textTable.getValueAt(textTable.getSelectedRow(), 0),(String) textTable.getValueAt(textTable.getSelectedRow(), 1), (String) textTable.getValueAt(textTable.getSelectedRow(), 2), gc, (String) textTable.getValueAt(textTable.getSelectedRow(), 4));
-
-                    ChangeForm form1 = new ChangeForm("Измените поля", mainForm, t);
-
-                    form1.setVisible(true);
-                    form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    form1.setSize(320, 287);
-                    form1.setLocationRelativeTo(null);
-
+                    Task t = new Task((String) textTable.getValueAt(textTable.getSelectedRow(), 0), (String) textTable.getValueAt(textTable.getSelectedRow(), 1), (String) textTable.getValueAt(textTable.getSelectedRow(), 2), gc, (String) textTable.getValueAt(textTable.getSelectedRow(), 4));
+                    try {
+                        ChangeForm form1 = new ChangeForm("Измените поля", mainForm, t);
+                        form1.setVisible(true);
+                        form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        form1.setSize(320, 287);
+                        form1.setLocationRelativeTo(null);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
+
+            }
+        });
+        //КНОПКА "РАБОТА С КЛИЕНТАМИ"
+        addClient.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddClientForm form1 = new AddClientForm();
+                form1.setVisible(true);
+                form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                form1.setSize(650, 400);
+                form1.setLocationRelativeTo(null);
+
 
             }
         });

@@ -15,16 +15,17 @@ import java.util.logging.Logger;
 
 public class ChangeForm extends JFrame {
 
-    public ChangeForm(String nameForm, MainForm parentForm, Task cTask) {
+    public ChangeForm(String nameForm, MainForm parentForm, Task cTask) throws IOException, ClassNotFoundException {
 
         super(nameForm);
         setLayout(null);
         String nameF = cTask.getName();
+
         //                     КОМПОНЕНТЫ ФОРМЫ                     //
 
         //КЛИЕНТ
         JLabel lclient = new JLabel("Клиент:");
-        JTextField client = new JTextField(cTask.getClient());
+        JComboBox client = new JComboBox(TaskManager.getNamesFromFile());
         add(lclient);
         add(client);
         lclient.setBounds(0, 0, 100, 20);
@@ -76,31 +77,35 @@ public class ChangeForm extends JFrame {
                 try {
                     String nameTask = name.getText();
                     char[] nameCharTask = nameTask.toCharArray();
-                    if ((!name.getText().equals("")) && (nameCharTask[0] != ' ')) {
-                        String pathTask = MainForm.pathCatalog + "\\" + name.getText() + ".txt";
 
-                        //формирование даты
-                        String sb = new String(date.getText());
-                        String[] strings = sb.split("[ /,.-[:]]");
+                        if ((!name.getText().equals("")) && (nameCharTask[0] != ' ')) {
+                            String pathTask = MainForm.pathCatalog + "\\" + name.getText() + ".txt";
 
-                        strings[0] = (Integer.parseInt(strings[0]) - 1) + "";
+                            //формирование даты
+                            String sb = new String(date.getText());
+                            String[] strings = sb.split("[ /,.-[:]]");
 
-                        GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
-                        //формирование нового таска
-                        Task t = new Task(client.getText(), name.getText(), description.getText(), gc, contacts.getText());
+                            strings[0] = (Integer.parseInt(strings[0]) - 1) + "";
 
-                        //запись таска в исходный файл
+                            GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
+                            //формирование нового таска
+                            Task t = new Task((String) (client.getSelectedItem()), name.getText(), description.getText(), gc, contacts.getText());
+                            String dateFormatted = t.getDate().replace('/', '-');
+                            dateFormatted = dateFormatted.replace(':', '-');
+                            //запись таска в исходный файл
+                            String dateF = cTask.getDate().replace('/', '-');
+                            dateF = dateF.replace(':', '-');
 
-                        TaskManager.addTaskToFile(t, MainForm.pathCatalog + "\\" + nameF + ".txt");
-                        TaskManager.renameFile(MainForm.pathCatalog + "\\" + nameF + ".txt", MainForm.pathCatalog + "\\" + name.getText() + ".txt");
+                            TaskManager.addTaskToFile(t, MainForm.pathCatalog + "\\" + nameF + dateF + ".txt");
+                            TaskManager.renameFile(MainForm.pathCatalog + "\\" + nameF + dateF + ".txt", MainForm.pathCatalog + "\\" + name.getText() + dateFormatted + ".txt");
 
-                        //вывод на экран обновленного списка задач
-                        parentForm.outputTasks(MainForm.pathCatalog);
+                            //вывод на экран обновленного списка задач
+                            parentForm.outputTasks(MainForm.pathCatalog);
 
-                        dispose();
+                            dispose();
 
-                    } else
-                        JOptionPane.showMessageDialog(null, "Имя задания не должно быть пустым и начинаться с пробела", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                        } else
+                            JOptionPane.showMessageDialog(null, "Имя задания не должно быть пустым и начинаться с пробела", "Ошибка", JOptionPane.ERROR_MESSAGE);
 
                 } catch (IOException e) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);

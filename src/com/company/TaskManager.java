@@ -1,17 +1,14 @@
 package com.company;
 
-import java.io.File;
-import java.io.ObjectOutputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
+import javax.print.attribute.standard.MediaSize;
+import javax.swing.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskManager {
 
-    private static List<Task>  tasks= null;
+    private static List<Task> tasks = null;
 
     public TaskManager() {
         tasks = new ArrayList<>();
@@ -34,10 +31,10 @@ public class TaskManager {
         }
     }
 
-    public static List<Task> getTasks()  {
+    public static List<Task> getTasks() {
         return tasks;
     }
-    
+
     public static List<Task> getTasksFromFiles(String pathCatalog) {
         File f = new File(pathCatalog);
         File[] paths = f.listFiles();
@@ -54,9 +51,9 @@ public class TaskManager {
                     e.printStackTrace();
                 }
                 tasks.add(task);
-            }          
+            }
         }
-        return tasks; 
+        return tasks;
     }
 
     public static void addTaskToFile(Task Task, String pathToFile) throws IOException {
@@ -66,6 +63,7 @@ public class TaskManager {
         fos.close();
         oos.close();
     }
+
 
     public static Task getTaskFromFile(String pathToFile) throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream(pathToFile);
@@ -97,6 +95,68 @@ public class TaskManager {
             else flag = false;
         }
         return flag;
+    }
+
+
+    public static void addNameToFile(String name) throws IOException {
+
+        OutputStream os = new FileOutputStream("clientsNames.txt", true);
+        name = name + ',';
+        os.write(name.getBytes());
+        os.close();
+    }
+
+    public static String[] getNamesFromFile() throws IOException, ClassNotFoundException {
+        InputStream is = new FileInputStream("clientsNames.txt");
+        StringBuilder sb = new StringBuilder();
+        int c;
+        while ((c = is.read()) != -1) {
+            sb.append((char) c);
+        }
+        String[] names = sb.toString().split(",");
+
+        is.close();
+        return names;
+    }
+
+    public static void delNameFromFile(String name) throws IOException, ClassNotFoundException {
+
+        String[] names = getNamesFromFile();
+        StringBuilder newNames = new StringBuilder();
+        int number = -1;
+        for (int i = 0; i < names.length; i++) {
+            if (name.equals(names[i])) {
+                number = i;
+            }
+        }
+        for (int i = 0; i < number; i++) {
+            newNames.append(names[i]);
+            newNames.append(',');
+        }
+        for (int i = number+1; i < names.length; i++) {
+            newNames.append(names[i]);
+            newNames.append(',');
+        }
+
+        OutputStream os = new FileOutputStream("clientsNames.txt");
+        os.write(newNames.toString().getBytes());
+        os.close();
+
+    }
+
+    public static boolean isAlignmentNames(String name) throws IOException, ClassNotFoundException {
+        int alignment = 0;
+        String[] names = TaskManager.getNamesFromFile();
+        for (int i = 0; i < names.length; i++) {
+            if (name.equals(names[i])) {
+                alignment++;
+            }
+        }
+        if (alignment > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
