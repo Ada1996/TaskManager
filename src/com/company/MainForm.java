@@ -162,7 +162,8 @@ public class MainForm extends JFrame {
                             delFile.delete();
 
                         }
-                        textTable.getSelectionModel().clearSelection();
+
+                        textTable.getSelectionModel().clearSelection();//убирает выделение строк
                         outputTasks(pathCatalog);
                     }
                 } catch (IOException ex) {
@@ -218,13 +219,18 @@ public class MainForm extends JFrame {
         addClient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddClientForm form1 = new AddClientForm();
-                form1.setVisible(true);
-                form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                form1.setSize(650, 400);
-                form1.setLocationRelativeTo(null);
-
-
+                AddClientForm form1 = null;
+                try {
+                    form1 = new AddClientForm();
+                    form1.setVisible(true);
+                    form1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    form1.setSize(320, 210);
+                    form1.setLocationRelativeTo(null);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
     }

@@ -84,15 +84,13 @@ public class TaskManager {
     }
 
     public static boolean equalsTasks(String pathTask, String pathCatalog) {
-        boolean flag = true;
+        boolean flag = false;
         File f = null;
-        File[] paths;
         f = new File(pathCatalog);
-        paths = f.listFiles();
+        File[] paths = f.listFiles();
         for (File path : paths) {
             String pathStr = path.toString();
-            if (!pathStr.equals(pathTask)) flag = true;
-            else flag = false;
+            if (pathStr.equals(pathTask)) flag = true;
         }
         return flag;
     }
