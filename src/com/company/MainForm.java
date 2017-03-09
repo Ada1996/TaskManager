@@ -64,13 +64,15 @@ public class MainForm extends JFrame {
         File[] paths;
         f = new File(pathCatalog);
         paths = f.listFiles();
+        tTable.deleteTasks();
+        textTable.updateUI();
         for (File path : paths) {
             String pathStr = path.toString();
             if (pathStr.lastIndexOf("txt") == (pathStr.length() - 3)) {
                 Task task = TaskManager.getTaskFromFile(pathStr);
                 journ.add(task);
             }
-            tTable.deleteTasks();
+            //tTable.deleteTasks();
             tTable.addTasks(journ);
             textTable.updateUI();
         }
