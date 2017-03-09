@@ -10,10 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Timer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-import java.util.List;
 
 
 /**
@@ -72,7 +70,6 @@ public class MainForm extends JFrame {
                 Task task = TaskManager.getTaskFromFile(pathStr);
                 journ.add(task);
             }
-            //tTable.deleteTasks();
             tTable.addTasks(journ);
             textTable.updateUI();
         }

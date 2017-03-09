@@ -9,6 +9,8 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Настя
@@ -25,21 +27,32 @@ public class Client implements Runnable {
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
 
-            String client = in.readUTF();
-            System.out.println(client);
-            List<Task> tasks = TaskManager.getTasksFromFiles(MainForm.pathCatalog);
-            List<Task> tasksClient = new ArrayList<>();
-            for (Task x : tasks) {
-                if (x.getClient().equals(client)) {
-                    tasksClient.add(x);
-                    System.out.println(x.getName());
-                }
+            String client = in.readUTF();          
+            if (!TaskManager.isAlignmentNames(client))
+            {
+                Task t = new Task("", "", "", null, ""); 
+                List<Task> tasksClient = new ArrayList<>();
+                tasksClient.add(t);
+                out.writeObject(tasksClient);
             }
-            out.writeObject(tasksClient);
+            else 
+            {
+                List<Task> tasks = TaskManager.getTasksFromFiles(MainForm.pathCatalog);
+                List<Task> tasksClient = new ArrayList<>();
+                for (Task x : tasks) {
+                    if (x.getClient().equals(client)) {
+                        tasksClient.add(x);
+                        System.out.println(x.getName());
+                    }
+                }
+                out.writeObject(tasksClient);
+            }
             out.close();
             in.close();
             socket.close();
         } catch (IOException e) {
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
