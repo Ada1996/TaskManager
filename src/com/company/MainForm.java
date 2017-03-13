@@ -70,6 +70,7 @@ public class MainForm extends JFrame {
                 Task task = TaskManager.getTaskFromFile(pathStr);
                 journ.add(task);
             }
+            tTable.deleteTasks();
             tTable.addTasks(journ);
             textTable.updateUI();
         }
