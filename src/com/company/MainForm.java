@@ -101,7 +101,7 @@ public class MainForm extends JFrame {
         JButton newTask = new JButton("Новое Задание");
         JButton changeTask = new JButton("Изменить задание");
         JButton deleteTask = new JButton("Удалить задание");
-        JButton addClient = new JButton("Работа с клиентами");
+        JButton addClient = new JButton("Работа с пользователями");
 
 
         menuBar.add(newTask);

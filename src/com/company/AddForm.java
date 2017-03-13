@@ -24,7 +24,7 @@ public class AddForm extends JFrame {
 
 
         //Клиент
-        JLabel lclient = new JLabel("Клиент:");
+        JLabel lclient = new JLabel("Пользователь:");
         JComboBox client = new JComboBox(TaskManager.getNamesFromFile());
 
         add(lclient);
@@ -95,7 +95,6 @@ public class AddForm extends JFrame {
                         String dateFormatted = t.getDate().replace('/', '-');
                         dateFormatted = dateFormatted.replace(':', '-');
 
-                        System.out.println(dateFormatted);
                         String pathTask = MainForm.pathCatalog + "\\" + name.getText() + dateFormatted + ".txt";
                         if (!TaskManager.equalsTasks(pathTask, MainForm.pathCatalog)) {
                             TaskManager.addTaskToFile(t, pathTask);

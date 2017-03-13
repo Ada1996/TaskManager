@@ -24,7 +24,7 @@ public class ChangeForm extends JFrame {
         //                     КОМПОНЕНТЫ ФОРМЫ                     //
 
         //КЛИЕНТ
-        JLabel lclient = new JLabel("Клиент:");
+        JLabel lclient = new JLabel("Пользователь:");
         JComboBox client = new JComboBox(TaskManager.getNamesFromFile());
         add(lclient);
         add(client);

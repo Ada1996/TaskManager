@@ -13,7 +13,6 @@ public class Main {
         form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         form.setSize(650, 400);
         form.setLocationRelativeTo(null);
-//спешл фо настя, проверка гита
 
         int port = 180;
         ServerSocket server = null;
