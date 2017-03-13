@@ -144,6 +144,7 @@ public class MainForm extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 try {
                     int[] selectedRows = textTable.getSelectedRows();
+
                     if (selectedRows.length == 0)
                         JOptionPane.showMessageDialog(null, "      Выберите файл!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     else {
@@ -215,7 +216,7 @@ public class MainForm extends JFrame {
 
             }
         });
-        //КНОПКА "РАБОТА С КЛИЕНТАМИ"
+        //КНОПКА "РАБОТА С ПОЛЬЗОВАТЕЛЯМИ"
         addClient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

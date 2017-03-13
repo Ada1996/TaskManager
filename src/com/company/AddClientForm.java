@@ -4,12 +4,13 @@ import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.time.DateTimeException;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +23,7 @@ public class AddClientForm extends JFrame {
     public AddClientForm() throws IOException, ClassNotFoundException {
 
         //ВНЕШНИЙ ВИД
-        super("Работа с клиентами");
+        super("Работа с пользователями");
         setLayout(null);
 
         JTextField client = new JTextField("");
@@ -55,14 +56,13 @@ public class AddClientForm extends JFrame {
                             TaskManager.addNameToFile(name);
                             clientBox.addItem(name);
                         } else {
-                            JOptionPane.showMessageDialog(null, "Данный клиент уже существует! Повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Данный пользователь уже существует! Повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
                         }
 
                     } catch (IOException e) {
                     } catch (ClassNotFoundException e) {
                     }
-                }
-                else
+                } else
                     JOptionPane.showMessageDialog(null, "Символы , \\ / ПРОБЕЛ не допускаются! Повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
 
                 client.setText("");
@@ -80,10 +80,32 @@ public class AddClientForm extends JFrame {
 
                 try {
                     if (TaskManager.isAlignmentNames(name)) {
-                        TaskManager.delNameFromFile(name);
-                        clientBox.removeItem(clientBox.getSelectedItem());
+
+
+                        java.util.List<Task> tasks = TaskManager.getTasksFromFiles(MainForm.pathCatalog);
+                        java.util.List<Task> tasksClient = new ArrayList<>();
+
+                       // boolean b = (tasksClient==null);//ложь, почемуууу
+
+                        for (Task x : tasks) {
+                            if (x.getClient().equals(name)) {
+                                tasksClient.add(x);
+                                System.out.println(x.getName());
+                            }
+                        }
+
+                        if (tasksClient.isEmpty())
+                        {
+                            TaskManager.delNameFromFile(name);
+                            clientBox.removeItem(clientBox.getSelectedItem());
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null, "Вы не можете удалить данного пользователя, так как у него остались задания.\nЛибо удалите их, либо передайте другим пользователям.", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                        }
+
                     } else {
-                        JOptionPane.showMessageDialog(null, "Данного клиента не существует!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Данного пользователя не существует!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
