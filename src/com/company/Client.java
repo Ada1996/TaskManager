@@ -29,12 +29,7 @@ public class Client implements Runnable {
 
             String client = in.readUTF();          
             if (!TaskManager.isAlignmentNames(client))
-            {
-                Task t = new Task("", "", "", null, ""); 
-                List<Task> tasksClient = new ArrayList<>();
-                tasksClient.add(t);
-                out.writeObject(tasksClient);
-            }
+                out.writeObject(null);
             else 
             {
                 List<Task> tasks = TaskManager.getTasksFromFiles(MainForm.pathCatalog);
