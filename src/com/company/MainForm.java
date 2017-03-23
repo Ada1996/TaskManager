@@ -156,7 +156,7 @@ public class MainForm extends JFrame {
                             dateF = dateF.replace(':', '-');
 
 
-                            sb.append("\\" + textTable.getValueAt(selIndex, 1) + dateF + ".txt");
+                            sb.append("\\" + textTable.getValueAt(selIndex, 0) + textTable.getValueAt(selIndex, 1) + dateF + ".txt");
                             String fileName = sb.toString();
                             File delFile = new File(fileName);
                             System.gc();

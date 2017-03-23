@@ -95,7 +95,7 @@ public class AddForm extends JFrame {
                         String dateFormatted = t.getDate().replace('/', '-');
                         dateFormatted = dateFormatted.replace(':', '-');
 
-                        String pathTask = MainForm.pathCatalog + "\\" + name.getText() + dateFormatted + ".txt";
+                        String pathTask = MainForm.pathCatalog + "\\" + client.getSelectedItem() + name.getText() + dateFormatted + ".txt";
                         if (!TaskManager.equalsTasks(pathTask, MainForm.pathCatalog)) {
                             TaskManager.addTaskToFile(t, pathTask);
                             parentForm.outputTasks(MainForm.pathCatalog);

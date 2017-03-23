@@ -1,7 +1,5 @@
 package com.company;
 
-import javax.print.attribute.standard.MediaSize;
-import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

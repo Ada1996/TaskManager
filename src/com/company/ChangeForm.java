@@ -79,34 +79,47 @@ public class ChangeForm extends JFrame {
                     String nameTask = name.getText();
                     char[] nameCharTask = nameTask.toCharArray();
 
-                        if ((!name.getText().equals("")) && (nameCharTask[0] != ' ')) {
-                            String pathTask = MainForm.pathCatalog + "\\" + name.getText() + ".txt";
+                    if ((!name.getText().equals("")) && (nameCharTask[0] != ' ')) {
 
-                            //формирование даты
-                            String sb = new String(date.getText());
-                            String[] strings = sb.split("[ /,.-[:]]");
+                        //формирование даты
+                        String sb = new String(date.getText());
+                        String[] strings = sb.split("[ /,.-[:]]");
 
-                            strings[0] = (Integer.parseInt(strings[0]) - 1) + "";
+                        strings[0] = (Integer.parseInt(strings[0]) - 1) + "";
 
-                            GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
-                            //формирование нового таска
-                            Task t = new Task((String) (client.getSelectedItem()), name.getText(), description.getText(), gc, contacts.getText());
-                            String dateFormatted = t.getDate().replace('/', '-');
-                            dateFormatted = dateFormatted.replace(':', '-');
-                            //запись таска в исходный файл
-                            String dateF = cTask.getDate().replace('/', '-');
-                            dateF = dateF.replace(':', '-');
+                        GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(strings[2]), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[3]), Integer.parseInt(strings[4]));
+                        //формирование нового таска
+                        Task t = new Task((String) (client.getSelectedItem()), name.getText(), description.getText(), gc, contacts.getText());
+                        String dateFormatted = t.getDate().replace('/', '-');
+                        dateFormatted = dateFormatted.replace(':', '-');
+                        //запись таска в исходный файл
+                        String dateF = cTask.getDate().replace('/', '-');
+                        dateF = dateF.replace(':', '-');
 
-                            TaskManager.addTaskToFile(t, MainForm.pathCatalog + "\\" + nameF + dateF + ".txt");
-                            TaskManager.renameFile(MainForm.pathCatalog + "\\" + nameF + dateF + ".txt", MainForm.pathCatalog + "\\" + name.getText() + dateFormatted + ".txt");
+
+                        String pathTask = MainForm.pathCatalog + "\\" + client.getSelectedItem() + name.getText() + dateFormatted + ".txt";
+                        String oldPathTask = MainForm.pathCatalog + "\\" + cTask.getClient() + nameF + dateF + ".txt";
+
+                        if ((cTask.getClient().equals(t.getClient())) && (cTask.getName().equals(t.getName())) && (cTask.getDate().equals(t.getDate()))) {
+                            TaskManager.addTaskToFile(t, oldPathTask);
+                            TaskManager.renameFile(oldPathTask, pathTask);
 
                             //вывод на экран обновленного списка задач
                             parentForm.outputTasks(MainForm.pathCatalog);
 
                             dispose();
+                        } else if (!TaskManager.equalsTasks(pathTask, MainForm.pathCatalog)) {
+                            TaskManager.addTaskToFile(t, oldPathTask);
+                            TaskManager.renameFile(oldPathTask, pathTask);
 
+                            //вывод на экран обновленного списка задач
+                            parentForm.outputTasks(MainForm.pathCatalog);
+
+                            dispose();
                         } else
-                            JOptionPane.showMessageDialog(null, "Имя задания не должно быть пустым и начинаться с пробела", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Данная задача уже существует", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    } else
+                        JOptionPane.showMessageDialog(null, "Имя задания не должно быть пустым и начинаться с пробела", "Ошибка", JOptionPane.ERROR_MESSAGE);
 
                 } catch (IOException e) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);

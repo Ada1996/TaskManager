@@ -1,18 +1,10 @@
 package com.company;
 
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import java.awt.*;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
-import java.time.DateTimeException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by daryo on 02.03.2017.
@@ -51,23 +43,26 @@ public class AddClientForm extends JFrame {
                 String name = client.getText();
                 char[] nameCharTask = name.toCharArray();
                 if (((!name.equals("")) && (!name.contains(" ")) && (!name.contains(",")) && (!name.contains("/")) && (!name.contains("\\")))) {
-                    try {
-                        if (!TaskManager.isAlignmentNames(name)) {
-                            TaskManager.addNameToFile(name);
-                            clientBox.addItem(name);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Данный пользователь уже существует! Повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                        }
+                    if (name.length() <= 20) {
+                        try {
+                            if (!TaskManager.isAlignmentNames(name)) {
+                                TaskManager.addNameToFile(name);
+                                clientBox.addItem(name);
+                                clientBox.setSelectedItem(name);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Данный пользователь уже существует! Повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                            }
 
-                    } catch (IOException e) {
-                    } catch (ClassNotFoundException e) {
-                    }
+                        } catch (IOException e) {
+                        } catch (ClassNotFoundException e) {
+                        }
+                    } else
+                        JOptionPane.showMessageDialog(null, "Длина имени должна быть не более 20 символов! Повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
+
                 } else
                     JOptionPane.showMessageDialog(null, "Символы , \\ / ПРОБЕЛ не допускаются! Повторите ввод", "Ошибка", JOptionPane.ERROR_MESSAGE);
 
                 client.setText("");
-
-
             }
         });
 
@@ -85,7 +80,7 @@ public class AddClientForm extends JFrame {
                         java.util.List<Task> tasks = TaskManager.getTasksFromFiles(MainForm.pathCatalog);
                         java.util.List<Task> tasksClient = new ArrayList<>();
 
-                       // boolean b = (tasksClient==null);//ложь, почемуууу
+                        // boolean b = (tasksClient==null);//ложь, почемуууу
 
                         for (Task x : tasks) {
                             if (x.getClient().equals(name)) {
@@ -94,13 +89,10 @@ public class AddClientForm extends JFrame {
                             }
                         }
 
-                        if (tasksClient.isEmpty())
-                        {
+                        if (tasksClient.isEmpty()) {
                             TaskManager.delNameFromFile(name);
                             clientBox.removeItem(clientBox.getSelectedItem());
-                        }
-                        else
-                        {
+                        } else {
                             JOptionPane.showMessageDialog(null, "Вы не можете удалить данного пользователя, так как у него остались задания.\nЛибо удалите их, либо передайте другим пользователям.", "Ошибка", JOptionPane.ERROR_MESSAGE);
                         }
 
